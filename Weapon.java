@@ -40,7 +40,7 @@ public class Weapon
       return weaponName;
    }
 
-   public void setdamagePerhit( String damage ) throws damageFormatException
+   public void setdamagePerhit( double damage )
    {   
       
       damagePerhit = damage;
