@@ -1,0 +1,652 @@
+
+Image
+Name
+Special
+Matchmaking Range
+Special Points
+Parameters
+{
+"Inkbrush":
+{ "Special": "Killer Wail 5.1",
+"Matchmaking Range": "7",
+"Special Meter": "180",
+"Range": 5,
+"Ink Speed": 100,
+"Handling": 100},
+
+"Inkbrush Nouveau":
+{ "Special": "Ultra Stamp",
+"Matchmaking Range": "7",
+"Special Meter": "180",
+"Range": 5,
+"Ink Speed": 100,
+"Handling": 100},
+
+"Sploosh-o-matic":
+{ "Special": "Ultra Stamp",
+"Matchmaking Range": "8",
+"Special Meter": "180",
+"Range": 12,
+"Damage": 52,
+"Fire Rate": 75},
+
+"Neo Sploosh-o-matic":
+{ "Special": "Killer Wail 5.1",
+"Matchmaking Range": "8",
+"Special Meter": "180",
+"Range": 12,
+"Damage": 52,
+"Fire Rate": 75},
+
+"Carbon Roller":
+{ "Special": "Zipcaster",
+"Matchmaking Range": "9.5",
+"Special Meter": "180",
+"Range": 20,
+"Ink Speed": 63,
+"Handling": 65},
+
+"Carbon Roller Deco":
+{ "Special": "Trizooka",
+"Matchmaking Range": "9.5",
+"Special Meter": "190",
+"Range": 20,
+"Ink Speed": 63,
+"Handling": 65},
+
+"Dapple Dualies":
+{ "Special": "Tacticooler",
+"Matchmaking Range": "9.5",
+"Special Meter": "180",
+"Range": 24,
+"Damage": 47,
+"Mobility": 80},
+
+"Dapple Dualies Nouveau":
+{ "Special": "Reefslider",
+"Matchmaking Range": "9.5",
+"Special Meter": "190",
+"Range": 24,
+"Damage": 47,
+"Mobility": 80},
+
+"Octobrush":
+{ "Special": "Zipcaster",
+"Matchmaking Range": "10.5",
+"Special Meter": "200",
+"Range": 23,
+"Ink Speed": 80,
+"Handling": 85},
+
+"Splattershot Jr.":
+{ "Special": "Big Bubbler",
+"Matchmaking Range": "11",
+"Special Meter": "180",
+"Range": 35,
+"Damage": 22,
+"Fire Rate": 75},
+
+"Custom Splattershot Jr.":
+{ "Special": "Wave Breaker",
+"Matchmaking Range": "11",
+"Special Meter": "190",
+"Range": 35,
+"Damage": 22,
+"Fire Rate": 75},
+
+"Aerospray MG":
+{ "Special": "Reefslider",
+"Matchmaking Range": "11",
+"Special Meter": "180",
+"Range": 35,
+"Damage": 10,
+"Fire Rate": 90},
+
+"Aerospray RG":
+{ "Special": "Booyah Bomb",
+"Matchmaking Range": "11",
+"Special Meter": "200",
+"Range": 35,
+"Damage": 10,
+"Fire Rate": 90},
+
+"Luna Blaster":
+{ "Special": "Zipcaster",
+"Matchmaking Range": "11",
+"Special Meter": "180",
+"Range": 18,
+"Impact": 70,
+"Fire Rate": 30},
+
+"Luna Blaster Neo":
+{ "Special": "Ultra Stamp",
+"Matchmaking Range": "11",
+"Special Meter": "180",
+"Range": 18,
+"Impact": 70,
+"Fire Rate": 30},
+
+"Clash Blaster":
+{ "Special": "Trizooka",
+"Matchmaking Range": "11",
+"Special Meter": "180",
+"Range": 21,
+"Impact": 25,
+"Fire Rate": 65},
+
+"Clash Blaster Neo":
+{ "Special": "Super Chump",
+"Matchmaking Range": "11",
+"Special Meter": "180",
+"Range": 21,
+"Impact": 25,
+"Fire Rate": 65},
+
+"Tri-Slosher":
+{ "Special": "Inkjet",
+"Matchmaking Range": "11",
+"Special Meter": "180",
+"Range": 31,
+"Damage": 75,
+"Handling": 70},
+
+"Tri-Slosher Nouveau":
+{ "Special": "Tacticooler",
+"Matchmaking Range": "11",
+"Special Meter": "180",
+"Range": 31,
+"Damage": 75,
+"Handling": 70},
+
+"Splash-o-matic":
+{ "Special": "Crab Tank",
+"Matchmaking Range": "11.7",
+"Special Meter": "200",
+"Range": 42,
+"Damage": 22,
+"Fire Rate": 75},
+
+"Neo Splash-o-matic":
+{ "Special": "Triple Inkstrike",
+"Matchmaking Range": "11.7",
+"Special Meter": "200",
+"Range": 42,
+"Damage": 22,
+"Fire Rate": 75},
+
+"Splat Roller":
+{ "Special": "Big Bubbler",
+"Matchmaking Range": "11.8",
+"Special Meter": "180",
+"Range": 48,
+"Ink Speed": 45,
+"Handling": 55},
+
+"Krak-On Splat Roller":
+{ "Special": "Kraken Royale",
+"Matchmaking Range": "11.8",
+"Special Meter": "180",
+"Range": 48,
+"Ink Speed": 45,
+"Handling": 55},
+
+"Undercover Brella":
+{ "Special": "Reefslider",
+"Matchmaking Range": "11.8",
+"Special Meter": "180",
+"Range": 50,
+"Damage": 30
+Durability": 25},
+
+"Splattershot":
+{ "Special": "Trizooka",
+"Matchmaking Range": "12.5",
+"Special Meter": "190",
+"Range": 50,
+"Damage": 47,
+"Fire Rate": 60},
+
+"Tentatek Splattershot":
+{ "Special": "Triple Inkstrike",
+"Matchmaking Range": "12.5",
+"Special Meter": "190",
+"Range": 50,
+"Damage": 47,
+"Fire Rate": 60},
+
+"Hero Shot Replica":
+{ "Special": "Trizooka",
+"Matchmaking Range": "12.5",
+"Special Meter": "190",
+"Range": 50,
+"Damage": 47,
+"Fire Rate": 60},
+
+"N-ZAP '85":
+{ "Special": "Tacticooler",
+"Matchmaking Range": "12.5",
+"Special Meter": "180",
+"Range": 50,
+"Damage": 22,
+"Fire Rate": 75},
+
+"N-ZAP '89":
+{ "Special": "Super Chump",
+"Matchmaking Range": "12.5",
+"Special Meter": "180",
+"Range": 50,
+"Damage": 22,
+"Fire Rate": 75},
+
+"Big Swig Roller":
+{ "Special": "Ink Vac",
+"Matchmaking Range": "12.5",
+"Special Meter": "200",
+"Range": 56,
+"Ink Speed": 54,
+"Handling": 60},
+
+"Splat Dualies":
+{ "Special": "Crab Tank",
+"Matchmaking Range": "12.5",
+"Special Meter": "190",
+"Range": 50,
+"Damage": 29,
+"Mobility": 60},
+
+"Splat Brella":
+{ "Special": "Triple Inkstrike",
+"Matchmaking Range": "12.5",
+"Special Meter": "200",
+"Range": 43,
+"Damage": 65
+Durability": 60},
+
+"Splatana Wiper":
+{ "Special": "Ultra Stamp",
+"Matchmaking Range": "13",
+"Special Meter": "190",
+"Range": 58,
+"Damage": 29,
+"Handling": 75},
+
+".52 Gal":
+{ "Special": "Killer Wail 5.1",
+"Matchmaking Range": "13.3",
+"Special Meter": "190",
+"Range": 55,
+"Damage": 75,
+"Fire Rate": 25},
+
+"Blaster":
+{ "Special": "Big Bubbler",
+"Matchmaking Range": "13.3",
+"Special Meter": "180",
+"Range": 27,
+"Impact": 70,
+"Fire Rate": 20},
+
+"L-3 Nozzlenose":
+{ "Special": "Crab Tank",
+"Matchmaking Range": "13.5",
+"Special Meter": "200",
+"Range": 62,
+"Damage": 25,
+"Fire Rate": 65},
+
+"L-3 Nozzlenose D":
+{ "Special": "Ultra Stamp",
+"Matchmaking Range": "13.5",
+"Special Meter": "200",
+"Range": 62,
+"Damage": 25,
+"Fire Rate": 65},
+
+"Flingza Roller":
+{ "Special": "Tenta Missiles",
+"Matchmaking Range": "14",
+"Special Meter": "210",
+"Range": 58,
+"Ink Speed": 45,
+"Handling": 45},
+
+"Dark Tetra Dualies":
+{ "Special": "Reefslider",
+"Matchmaking Range": "14",
+"Special Meter": "200",
+"Range": 58,
+"Damage": 22,
+"Mobility": 90},
+
+"Slosher":
+{ "Special": "Triple Inkstrike",
+"Matchmaking Range": "14.5",
+"Special Meter": "200",
+"Range": 58,
+"Damage": 85,
+"Handling": 50},
+
+"Slosher Deco":
+{ "Special": "Zipcaster",
+"Matchmaking Range": "14.5",
+"Special Meter": "180",
+"Range": 58,
+"Damage": 85,
+"Handling": 50},
+
+"Sloshing Machine":
+{ "Special": "Booyah Bomb",
+"Matchmaking Range": "14.7",
+"Special Meter": "220",
+"Range": 60,
+"Damage": 90,
+"Handling": 40},
+
+"Bloblobber":
+{ "Special": "Ink Storm",
+"Matchmaking Range": "15",
+"Special Meter": "190",
+"Range": 85,
+"Damage": 29,
+"Handling": 50},
+
+"Mini Splatling":
+{ "Special": "Ultra Stamp",
+"Matchmaking Range": "15",
+"Special Meter": "180",
+"Range": 62,
+"Charge Speed": 80,
+"Mobility": 90},
+
+"Zink Mini Splatling":
+{ "Special": "Big Bubbler",
+"Matchmaking Range": "15",
+"Special Meter": "200",
+"Range": 62,
+"Charge Speed": 80,
+"Mobility": 90},
+
+"Tenta Brella":
+{ "Special": "Ink Vac",
+"Matchmaking Range": "15",
+"Special Meter": "190",
+"Range": 62,
+"Damage": 85
+Durability": 85},
+
+"REEF-LUX 450":
+{ "Special": "Tenta Missiles",
+"Matchmaking Range": "15",
+"Special Meter": "210",
+"Range": 60,
+"Charge Speed": 77,
+"Mobility": 60},
+
+"Splattershot Nova":
+{ "Special": "Killer Wail 5.1",
+"Matchmaking Range": "16",
+"Special Meter": "190",
+"Range": 68,
+"Damage": 10,
+"Fire Rate": 60},
+
+"Glooga Dualies":
+{ "Special": "Booyah Bomb",
+"Matchmaking Range": "16",
+"Special Meter": "180",
+"Range": 66,
+"Damage": 76,
+"Mobility": 35},
+
+"Splatana Stamper":
+{ "Special": "Zipcaster",
+"Matchmaking Range": "16.5",
+"Special Meter": "200",
+"Range": 75,
+"Damage": 43,
+"Handling": 60},
+
+"Rapid Blaster":
+{ "Special": "Triple Inkstrike",
+"Matchmaking Range": "16.7",
+"Special Meter": "200",
+"Range": 62,
+"Impact": 35,
+"Fire Rate": 40},
+
+"Rapid Blaster Deco":
+{ "Special": "Inkjet",
+"Matchmaking Range": "16.7",
+"Special Meter": "200",
+"Range": 62,
+"Impact": 35,
+"Fire Rate": 40},
+
+"Splattershot Pro":
+{ "Special": "Crab Tank",
+"Matchmaking Range": "17",
+"Special Meter": "180",
+"Range": 70,
+"Damage": 60,
+"Fire Rate": 30},
+
+"Forge Splattershot Pro":
+{ "Special": "Booyah Bomb",
+"Matchmaking Range": "17",
+"Special Meter": "210",
+"Range": 70,
+"Damage": 60,
+"Fire Rate": 30},
+
+"Range Blaster":
+{ "Special": "Wave Breaker",
+"Matchmaking Range": "17",
+"Special Meter": "200",
+"Range": 56,
+"Impact": 70,
+"Fire Rate": 10},
+
+"H-3 Nozzlenose":
+{ "Special": "Tacticooler",
+"Matchmaking Range": "17",
+"Special Meter": "190",
+"Range": 70,
+"Damage": 58,
+"Fire Rate": 30},
+
+"Dualie Squelchers":
+{ "Special": "Wave Breaker",
+"Matchmaking Range": "17",
+"Special Meter": "200",
+"Range": 70,
+"Damage": 22,
+"Mobility": 70},
+
+".96 Gal":
+{ "Special": "Ink Vac",
+"Matchmaking Range": "18",
+"Special Meter": "190",
+"Range": 74,
+"Damage": 80,
+"Fire Rate": 10},
+
+".96 Gal Deco":
+{ "Special": "Kraken Royale",
+"Matchmaking Range": "18",
+"Special Meter": "210",
+"Range": 74,
+"Damage": 80,
+"Fire Rate": 10},
+
+"Nautilus 47":
+{ "Special": "Ink Storm",
+"Matchmaking Range": "18",
+"Special Meter": "190",
+"Range": 74,
+"Charge Speed": 37,
+"Mobility": 70},
+
+"Dynamo Roller":
+{ "Special": "Tacticooler",
+"Matchmaking Range": "18.5",
+"Special Meter": "190",
+"Range": 76,
+"Ink Speed": 25,
+"Handling": 20},
+
+"Classic Squiffer":
+{ "Special": "Big Bubbler",
+"Matchmaking Range": "18.5",
+"Special Meter": "190",
+"Range": 75,
+"Charge Speed": 70,
+"Mobility": 60},
+
+"Rapid Blaster Pro":
+{ "Special": "Ink Vac",
+"Matchmaking Range": "19.2",
+"Special Meter": "180",
+"Range": 72,
+"Impact": 35,
+"Fire Rate": 30},
+
+"Squeezer":
+{ "Special": "Trizooka",
+"Matchmaking Range": "20",
+"Special Meter": "200",
+"Range": 77,
+"Damage": 52,
+"Fire Rate": 30},
+
+"Explosher":
+{ "Special": "Ink Storm",
+"Matchmaking Range": "20.7",
+"Special Meter": "200",
+"Range": 77,
+"Damage": 65,
+"Handling": 20},
+
+"Bamboozler 14 Mk I":
+{ "Special": "Killer Wail 5.1",
+"Matchmaking Range": "21",
+"Special Meter": "200",
+"Range": 78,
+"Charge Speed": 90,
+"Mobility": 80},
+
+"Goo Tuber":
+{ "Special": "Tenta Missiles",
+"Matchmaking Range": "21",
+"Special Meter": "200",
+"Range": 78,
+"Charge Speed": 38,
+"Mobility": 70},
+
+"Heavy Splatling":
+{ "Special": "Wave Breaker",
+"Matchmaking Range": "21",
+"Special Meter": "200",
+"Range": 78,
+"Charge Speed": 38,
+"Mobility": 55},
+
+"Jet Squelcher":
+{ "Special": "Ink Vac",
+"Matchmaking Range": "22.5",
+"Special Meter": "190",
+"Range": 82,
+"Damage": 35,
+"Fire Rate": 30},
+
+"Custom Jet Squelcher":
+{ "Special": "Ink Storm",
+"Matchmaking Range": "22.5",
+"Special Meter": "180",
+"Range": 82,
+"Damage": 35,
+"Fire Rate": 30},
+
+"Hydra Splatling":
+{ "Special": "Booyah Bomb",
+"Matchmaking Range": "24.5",
+"Special Meter": "190",
+"Range": 85,
+"Charge Speed": 10,
+"Mobility": 20},
+
+"Ballpoint Splatling":
+{ "Special": "Inkjet",
+"Matchmaking Range": "24.5",
+"Special Meter": "190",
+"Range": 84,
+"Charge Speed": 18,
+"Mobility": 60},
+
+"Snipewriter 5H":
+{ "Special": "Tacticooler",
+"Matchmaking Range": "25",
+"Special Meter": "200",
+"Range": 91,
+"Charge Speed": 43,
+"Mobility": 80},
+
+"Tri-Stringer":
+{ "Special": "Killer Wail 5.1",
+"Matchmaking Range": "25",
+"Special Meter": "190",
+"Range": 88,
+"Charge Speed": 40,
+"Mobility": 40},
+
+"Splat Charger":
+{ "Special": "Ink Vac",
+"Matchmaking Range": "26",
+"Special Meter": "200",
+"Range": 88,
+"Charge Speed": 50,
+"Mobility": 40},
+
+"Z+F Splat Charger":
+{ "Special": "Triple Inkstrike",
+"Matchmaking Range": "26",
+"Special Meter": "210",
+"Range": 88,
+"Charge Speed": 50,
+"Mobility": 40},
+
+"Splatterscope":
+{ "Special": "Ink Vac",
+"Matchmaking Range": "28",
+"Special Meter": "200",
+"Range": 91,
+"Charge Speed": 50,
+"Mobility": 30},
+
+"Z+F Splatterscope":
+{ "Special": "Triple Inkstrike",
+"Matchmaking Range": "28",
+"Special Meter": "210",
+"Range": 91,
+"Charge Speed": 50,
+"Mobility": 30},
+
+"E-liter 4K":
+{ "Special": "Wave Breaker",
+"Matchmaking Range": "31",
+"Special Meter": "210",
+"Range": 96,
+"Charge Speed": 20,
+"Mobility": 15},
+
+"E-liter 4K Scope":
+{ "Special": "Wave Breaker",
+"Matchmaking Range": "33",
+"Special Meter": "210",
+"Range": 100,
+"Charge Speed": 20,
+"Mobility": 5
+}}
+
+Webpage created by Lean. Framework used is Bootstrap. Message Lib by OatmealDome. Salmon Run RNG Data in cooperation with WemI0},
+
+"Feedback or suggestions are welcome. Please contact me via Twitter  or Github .
