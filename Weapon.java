@@ -2,7 +2,6 @@ import javax.print.DocFlavor.STRING;
 
 public class Weapon 
 {
-   //using damageFormatException;
    private String weaponClass;
    private String weaponName;
    private double damagePerhit;
@@ -60,6 +59,6 @@ public class Weapon
       getweaponName(), getweaponClass(), getdamagePerhit() );
    }
 
-} // end abstract class Weapon
+}
 
 
