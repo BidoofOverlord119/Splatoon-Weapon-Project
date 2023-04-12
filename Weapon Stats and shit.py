@@ -1,4 +1,5 @@
 ##Using Python here just to store the data because I know what all this stuff is
+#Working
 
 weapons = {
 "Inkbrush":
