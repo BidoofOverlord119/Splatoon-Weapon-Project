@@ -10,7 +10,7 @@ public class Weapon
    public Weapon()
    {
    }
-   public Weapon( String wClass, String wName, Double damage ) throws damageFormatException
+   public Weapon( String wClass, String wName, Double damage )
    {
       weaponClass = wClass;
       weaponName = wName;
@@ -18,9 +18,9 @@ public class Weapon
    } 
    
    
-   public void setweaponClass( String wName )
+   public void setweaponClass( String wClass )
    {
-      weaponClass = wName;
+      weaponClass = wClass;
    } 
    
    
