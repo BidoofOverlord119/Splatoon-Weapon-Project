@@ -1,35 +1,15 @@
-import javax.print.DocFlavor.STRING;
-
-public class Weapon 
+public abstract class Weapon
 {
-   private String weaponClass;
    private String weaponName;
-   private double damagePerhit;
+   private double damagePerHit;
 
-   public Weapon()
+   public Weapon( String wName, Double damage )
    {
-   }
-   public Weapon( String wClass, String wName, Double damage )
-   {
-      weaponClass = wClass;
       weaponName = wName;
-      damagePerhit = damage;
-   } 
-   
-   
-   public void setweaponClass( String wClass )
-   {
-      weaponClass = wClass;
-   } 
-   
-   
-   public String getweaponClass()
-   {
-      return weaponClass;
-   } 
-   
-   
-   public void setweaponName( String wName )
+      damagePerHit = damage;
+   }
+
+   public void setWeaponName( String wName )
    {
       weaponName = wName;
    } 
@@ -39,24 +19,24 @@ public class Weapon
       return weaponName;
    }
 
-   public void setdamagePerhit( double damage )
+   public void setDamagePerHit(double damage )
    {   
       
-      damagePerhit = damage;
+      damagePerHit = damage;
       
    } 
 
    
 
-   public String getdamagePerhit()
+   public double getDamagePerHit()
    {
-      return damagePerhit;
+      return damagePerHit;
    }
 
    public String toString()
    {
-      return String.format( "%s %s\nstats:\n\tdamage: %d", 
-      getweaponName(), getweaponClass(), getdamagePerhit() );
+      return String.format( "%s\nstats:\n\tdamage: %.1f",
+      getweaponName(), getDamagePerHit() );
    }
 
 }
