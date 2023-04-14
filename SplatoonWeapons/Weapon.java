@@ -2,15 +2,17 @@ package SplatoonWeapons;
 
 public interface Weapon {
 
-    public void setWeaponName(String weaponName);
+    void setWeaponName(String weaponName);
 
-    public String getWeaponName();
+    String getWeaponName();
 
-    public void setDamagePerHit(double damage);
+    // Damage in Splatoon is always stored as an integer, then divided by 10 when displayed.
+    // For example, when the game shows 34.0 damage it is stored as 340.
+    void setDamagePerHit(int damage);
 
-    public  double getDamagePerHit();
+    int getDamagePerHit();
 
-    public String toString();
+    String toString();
 }
 
 

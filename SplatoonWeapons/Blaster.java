@@ -3,18 +3,18 @@ package SplatoonWeapons;
 public class Blaster implements Weapon {
 
     private String weaponName;
-    private double damagePerHit;
+    private int damagePerHit;
 
-    public Blaster(String weaponName, double damagePerHit) {
+    public Blaster(String weaponName, int damagePerHit) {
         this.weaponName = weaponName;
         this.damagePerHit = damagePerHit;
     }
 
-    public double getDamagePerHit() {
+    public int getDamagePerHit() {
         return damagePerHit;
     }
 
-    public void setDamagePerHit(double damagePerHit) {
+    public void setDamagePerHit(int damagePerHit) {
         this.damagePerHit = damagePerHit;
     }
 
