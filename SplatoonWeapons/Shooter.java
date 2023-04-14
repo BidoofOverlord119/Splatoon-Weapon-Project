@@ -2,27 +2,37 @@ package SplatoonWeapons;
 
 public class Shooter implements Weapon {
 
-    private String weaponName;
-    private int damagePerHit;
+    public final String weaponName;
+    public final int baseDamage;
 
-    public Shooter(String weaponName, int damagePerHit) {
+    // values are starting frame, ending frame, minimum damage
+    // falloff is linear (?)
+    // represented by values ReduceStartFrame, ReduceEndFrame, ValueMin
+    private final int[] falloffStats;
+
+    public Shooter(String weaponName, int baseDamage, int[] falloffStats) {
         this.weaponName = weaponName;
-        this.damagePerHit = damagePerHit;
+        this.baseDamage = baseDamage;
+        this.falloffStats = falloffStats;
     }
 
-    public int getDamagePerHit() {
-        return damagePerHit;
+    public int calculateFalloff(int frames) {
+        if (frames <= falloffStats[0]) {
+            return baseDamage;
+        } else if (frames > falloffStats[1]) {
+            return falloffStats[2];
+        }
+
+        // calculate damage lost per frame
+        double lostPerFrame =  falloffStats[2] / (double) (falloffStats[1] - falloffStats[0]);
+        return (int) (baseDamage - ((frames - falloffStats[0]) * lostPerFrame));
     }
 
-    public void setDamagePerHit(int damagePerHit) {
-        this.damagePerHit = damagePerHit;
+    public int getBaseDamage() {
+        return baseDamage;
     }
 
     public String getWeaponName() {
         return weaponName;
-    }
-
-    public void setWeaponName(String weaponName) {
-        this.weaponName = weaponName;
     }
 }
