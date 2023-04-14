@@ -10,5 +10,3 @@ public interface Weapon {
 
     String toString();
 }
-
-
