@@ -26,7 +26,7 @@ GameParameters = {
     },
     "MoveParam": {
       "$type": "spl__BulletSimpleMoveParam",
-      "FreeGravity": 0.016,
+      "FreeGravity": 0.016, # Don't know
       "GoStraightStateEndMaxSpeed": 1.4495, # Set Velocity after GoStraightToBrakeStateFrame fames
       "GoStraightToBrakeStateFrame": 4, # Number of frames before Velocity starts to decrease
       "SpawnSpeed": 2.2 # Initial Velocity
@@ -82,11 +82,11 @@ GameParameters = {
       "Jump_DegBiasMax": 0.4, # The chance to shoot towards the outer reticle while jumping
       "Jump_DegSwerve": 12, # The angle that shots can deviate while jumping
       "MoveSpeed": 0.072, # Movement speed per frame
-      "ShotGuideFrame": 8, 
-      "SquidShotShorteningFrame": 1,
-      "Stand_DegBiasDecrease": 0.015,
-      "Stand_DegBiasKf": 0.01,
-      "Stand_DegBiasMin": 0.01, 
+      "ShotGuideFrame": 8,  # Don't know
+      "SquidShotShorteningFrame": 1, # I'm assuming this is the time to shoot from squid form?
+      "Stand_DegBiasDecrease": 0.015, # Don't know
+      "Stand_DegBiasKf": 0.01, # Don't know
+      "Stand_DegBiasMin": 0.01, # Don't know
       "Stand_DegSwerve": 6 # The angle that shots can deviate while on the ground
     },
     "spl__PlayerGearSkillParam_ActionSpecUp_ReduceJumpSwerveRate": {
