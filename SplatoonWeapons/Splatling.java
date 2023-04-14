@@ -4,6 +4,7 @@ public class Splatling implements Weapon {
 
     private String weaponName;
     private double damagePerHit;
+    private double chargeRate;
 
     public Splatling(String weaponName, double damagePerHit) {
         this.weaponName = weaponName;

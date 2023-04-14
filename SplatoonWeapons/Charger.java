@@ -4,6 +4,7 @@ public class Charger implements Weapon {
 
     private String weaponName;
     private double damagePerHit;
+    private double chargeRate;
 
     public Charger(String weaponName, double damagePerHit) {
         this.weaponName = weaponName;
