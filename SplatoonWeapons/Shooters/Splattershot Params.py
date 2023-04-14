@@ -1,5 +1,5 @@
 '''
-Done in Python, because I like how it formats more.
+Done in Python, because I like how it formats more, and this isn't going to be directly used.
 '''
 
 
