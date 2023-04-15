@@ -30,8 +30,8 @@ public class Shooter implements Weapon {
 
     public Shooter(String weaponName, int baseDamage) {
         this(weaponName, baseDamage,
-                new int[]{8, 40, baseDamage / 2}, // falloff stats
-                new double[]{0.01, 0.25, 0.01, 6.0});
+                new int[]{8, 40, baseDamage / 2}, // falloff stats of Splattershot
+                new double[]{0.01, 0.25, 0.01, 6.0}); // deviation stats of Splattershot
     }
 
     public Shooter(String weaponName, int baseDamage, int[] falloffStats, double[] shotDeviationStats) {
@@ -70,7 +70,8 @@ public class Shooter implements Weapon {
                 shotDeviationStats[1]); // enforce the maximum
         if (Math.random() < shotDeviationChance) {
             // Shot deviation seems to be a random angle with an even distribution, but can't confirm
-            return Math.random() * shotDeviationStats[3]; // pretty sure the angle is in one direction?
+            // Return a random number between -shotDeviationStats[3] and +shotDeviationStats[3]
+            return ((Math.random() - 0.5) * 2) * shotDeviationStats[3];
         } else return 0.0;
     }
 
