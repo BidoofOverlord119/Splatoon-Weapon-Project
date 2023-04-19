@@ -3,9 +3,7 @@ package SplatoonWeapons;
 public class Shooter implements Weapon {
     /*
     * Things that still need to be added:
-    * Hit tester
-    * Range
-    * Bullet hitbox?
+    * Multiple shots
     */
     private final String weaponName;
     private final int baseDamage;
@@ -24,6 +22,12 @@ public class Shooter implements Weapon {
      */
     private final double[] shotDeviationStats;
 
+    /**
+     * Values are initial velocity, initial velocity time (in frames), and slow velocity
+     * Represented by values SpawnSpeed, GoStraightToBrakeStateFrame, GoStraightStateEndMaxSpeed
+     */
+    private final double[] velocityStats;
+
     public Shooter() {
         this("Splattershot", 36);
     }
@@ -31,14 +35,17 @@ public class Shooter implements Weapon {
     public Shooter(String weaponName, int baseDamage) {
         this(weaponName, baseDamage,
                 new int[]{8, 40, baseDamage / 2}, // falloff stats of Splattershot
-                new double[]{0.01, 0.25, 0.01, 6.0}); // deviation stats of Splattershot
+                new double[]{0.01, 0.25, 0.01, 6.0},  // deviation stats of Splattershot
+                new double[]{2.2, 4, 1.4495}); // velocity stats of Splattershot
     }
 
-    public Shooter(String weaponName, int baseDamage, int[] falloffStats, double[] shotDeviationStats) {
+    public Shooter(String weaponName, int baseDamage, int[] falloffStats, double[] shotDeviationStats,
+                   double[] velocityStats) {
         this.weaponName = weaponName;
         this.baseDamage = baseDamage;
         this.falloffStats = falloffStats;
         this.shotDeviationStats = shotDeviationStats;
+        this.velocityStats = velocityStats;
     }
 
     /**
@@ -73,6 +80,50 @@ public class Shooter implements Weapon {
             // Return a random number between -shotDeviationStats[3] and +shotDeviationStats[3]
             return ((Math.random() - 0.5) * 2) * shotDeviationStats[3];
         } else return 0.0;
+    }
+
+    /**
+     * Calculate how far a shot should have travelled based on how many frames it has been in the air.
+     * @param frames How many frames the shot has been in the air.
+     * @return How far the shot has travelled, in distance units.
+     */
+    public double calculateDistance(int frames) {
+        int firstPhaseFrames = Math.min(frames, (int) velocityStats[1]);
+        int secondPhaseFrames = Math.max(frames - (int) velocityStats[1], 0);
+        double secondPhaseMultiplier = 2 * (1 - (1/Math.pow(2, secondPhaseFrames)));
+        return (velocityStats[0] * firstPhaseFrames) + (velocityStats[2] * secondPhaseMultiplier);
+    }
+
+    /**
+     * Calculates the maximum range of the weapon.
+     * @return Maximum weapon range in distance units.
+     */
+    public double calculateRange() {
+        return (velocityStats[0] * velocityStats[1]) + (velocityStats[2] * 2);
+    }
+
+    public double calculateHit(double targetDistance, double targetXOffset, int previousShots) {
+        double targetSize = 0.7; // size of target in distance units
+        if (targetDistance > calculateRange()) {
+            return -1;
+        }
+        // The shot's angle must be between these two to hit
+        double targetAngleLeft = Math.toDegrees(Math.atan((targetXOffset - 0.5 * targetSize) / targetDistance));
+        double targetAngleRight = Math.toDegrees(Math.atan((targetXOffset + 0.5 * targetSize) / targetDistance));
+        double shotDeviationAngle = calculateShotDeviation(previousShots);
+        if (shotDeviationAngle <= targetAngleLeft || shotDeviationAngle >= targetAngleRight) {
+            return -1;
+        }
+        for (int frames = 0; frames < 60; frames++) {
+            // todo: calculate when the shot should stop based on velocity
+            // doesn't really seem to matter, but should be done anyways?
+            // 60 frames should be more than enough
+            double shotDistance = calculateDistance(frames);
+            if (shotDistance >= targetDistance) {
+                return calculateFalloff(frames);
+            }
+        }
+        return -1;
     }
 
     public int getBaseDamage() {
