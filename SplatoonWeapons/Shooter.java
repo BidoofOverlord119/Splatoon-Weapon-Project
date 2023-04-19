@@ -7,8 +7,8 @@ public class Shooter implements Weapon {
     * Range
     * Bullet hitbox?
     */
-    public final String weaponName;
-    public final int baseDamage;
+    private final String weaponName;
+    private final int baseDamage;
 
     /**
      * Values are falloff starting frame, ending frame, and minimum damage.
