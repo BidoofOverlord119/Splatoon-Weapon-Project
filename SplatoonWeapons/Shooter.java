@@ -102,10 +102,15 @@ public class Shooter implements Weapon {
     /**
      * Calculate how much damage a shot should do with falloff.
      * Uses the falloffStats array for falloff parameters.
+     *
      * @param frames How many frames the shot has been in the air.
      * @return Falloff-adjusted damage.
      */
     public int calculateFalloff(int frames) {
+        if (!(frames >= 0)) {
+            throw new IllegalArgumentException("Frames must be at least 0");
+        }
+
         if (frames <= falloffStats[0]) {
             return getBaseDamage();
         } else if (frames > falloffStats[1]) {
@@ -120,11 +125,16 @@ public class Shooter implements Weapon {
     /**
      * Calculate the angle that the current shot should be fired at, due to shot deviation.
      * Uses the shotDeviationStats array for shot deviation parameters.
-     * @param shots How many shots have been previously fired by the weapon.
+     *
+     * @param previousShots How many shots have been previously fired by the weapon.
      * @return The angle that the shot should be fired at.
      */
-    public double calculateShotDeviation(int shots) {
-        double shotDeviationChance = Math.min(shotDeviationStats[0] + (shotDeviationStats[2] * shots),
+    public double calculateShotDeviation(int previousShots) {
+        if (!(previousShots >= 0)) {
+            throw new IllegalArgumentException("Previous shots must be at least 0");
+        }
+
+        double shotDeviationChance = Math.min(shotDeviationStats[0] + (shotDeviationStats[2] * previousShots),
                 shotDeviationStats[1]); // enforce the maximum
         if (Math.random() < shotDeviationChance) {
             // Shot deviation seems to be a random angle with an even distribution, but can't confirm
@@ -135,20 +145,26 @@ public class Shooter implements Weapon {
 
     /**
      * Calculate how far a shot should have travelled based on how many frames it has been in the air.
+     *
      * @param frames How many frames the shot has been in the air.
      * @return How far the shot has travelled, in distance units.
      */
     public double calculateDistance(int frames) {
+        if (!(frames >= 0)) {
+            throw new IllegalArgumentException("Frames must be at least 0");
+        }
+
         int firstPhaseFrames = Math.min(frames, (int) velocityStats[1]);
         int secondPhaseFrames = Math.max(frames - (int) velocityStats[1], 0);
         // second phase distance seems to max out at 2*velocityStats[2] units
         // We approximated that it follows the infinite series 1 + 1/2 + 1/4 + 1/8 ....
-        double secondPhaseMultiplier = 2 * (1 - (1/Math.pow(2, secondPhaseFrames)));
+        double secondPhaseMultiplier = 2 * (1 - (1 / Math.pow(2, secondPhaseFrames)));
         return (velocityStats[0] * firstPhaseFrames) + (velocityStats[2] * secondPhaseMultiplier);
     }
 
     /**
      * Calculates the maximum range of the weapon.
+     *
      * @return Maximum weapon range in distance units.
      */
     public double calculateRange() {
@@ -158,12 +174,20 @@ public class Shooter implements Weapon {
     /**
      * Calculates damage dealt by a single shot to a target, based on where the target is.
      * Returns -1 if the shot doesn't hit.
+     *
      * @param targetDistance Distance from the player to the target, in distance units.
-     * @param targetXOffset Left-right offset of the target, in distance units.
-     * @param previousShots How many shots have been fired by the weapon already, for shot deviation.
+     * @param targetXOffset  Left-right offset of the target, in distance units.
+     * @param previousShots  How many shots have been fired by the weapon already, for shot deviation.
      * @return Damage dealt by the shot. -1 if a miss.
      */
     public int calculateHit(double targetDistance, double targetXOffset, int previousShots) {
+        if (!(targetDistance >= 0)) {
+            throw new IllegalArgumentException("Target distance must be at least 0");
+        }
+        if (!(previousShots >= 0)) {
+            throw new IllegalArgumentException("Previous shots must be at least 0");
+        }
+
         double targetSize = 0.7; // (horizontal) size of target in distance units
         if (targetDistance > calculateRange()) {
             return -1;
@@ -190,9 +214,10 @@ public class Shooter implements Weapon {
 
     /**
      * Calculates damage dealt by the weapon to a target over a certain amount of time.
+     *
      * @param targetDistance Distance from the player to the target, in distance units.
-     * @param targetXOffset Left-right offset of the target, in distance units.
-     * @param time How long to shoot for, in frames.
+     * @param targetXOffset  Left-right offset of the target, in distance units.
+     * @param time           How long to shoot for, in frames.
      * @return Total damage dealt.
      */
     @Override
@@ -229,7 +254,7 @@ public class Shooter implements Weapon {
 
     @Override
     public String toString() {
-        return String.format("%s shooter, dealing %d damage per shot and %.1f shots per second",
-                getWeaponName(), getBaseDamage() / 10, getBaseFireRate());
+        return String.format("%s shooter, dealing %.1f damage per shot and %.1f shots per second",
+                getWeaponName(), getBaseDamage() / 10.0, getBaseFireRate());
     }
 }
