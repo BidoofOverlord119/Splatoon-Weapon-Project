@@ -12,7 +12,8 @@ public class Charger implements Weapon {
 
     private final int framesToCharge;
 
-    public Charger(String weaponName, int baseDamage, int minDamage, int maxDamage, double fullRange, double minRange, double maxRange, int framesToCharge) {
+    public Charger(String weaponName, int baseDamage, int minDamage, int maxDamage,
+                   double fullRange, double minRange, double maxRange, int framesToCharge) {
         this.weaponName = weaponName;
         this.baseDamage = baseDamage;
         this.minDamage = minDamage;
@@ -41,6 +42,17 @@ public class Charger implements Weapon {
             double rangeDifference = getMaxRange() - getMinRange();
             return (getMinRange() + (rangeDifference * chargeState));
         }
+    }
+
+    @Override
+    public double getBaseFireRate() {
+        return 60 / (double) getFramesToCharge();
+    }
+
+    @Override
+    public int calculateDamageOverTime(double targetDistance, double targetXOffset, int time) {
+        // Fill in later
+        return 0;
     }
 
     @Override
