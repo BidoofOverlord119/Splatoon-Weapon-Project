@@ -222,8 +222,9 @@ public class Shooter implements Weapon {
      */
     @Override
     public int calculateDamageOverTime(double targetDistance, double targetXOffset, int time) {
+        if (time == 0) return 0;
         int damageDealt = 0;
-        int numShots = time / getShotInterval();
+        int numShots = ((time - 1) / getShotInterval()) + 1; // always shoots on the first frame
         for (int i = 0; i < numShots; i++) {
             int currentDamage = calculateHit(targetDistance, targetXOffset, i);
             if (currentDamage != -1) {
