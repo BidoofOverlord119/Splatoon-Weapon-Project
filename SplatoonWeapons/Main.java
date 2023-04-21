@@ -16,6 +16,7 @@ public class Main {
             System.out.printf("Weapon dealt %.1f damage over %d frames (%.2f seconds) to a target %.1f units away, " +
                     "with X offset %.2f%n", w.calculateDamageOverTime(targetDistance, targetXOffset, time) / 10.0,
                     time, time / 60.0, targetDistance, targetXOffset);
+            System.out.println();
         }
     }
 }
