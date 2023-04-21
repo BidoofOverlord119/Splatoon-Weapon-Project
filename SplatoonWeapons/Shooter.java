@@ -4,37 +4,71 @@ public class Shooter implements Weapon {
     private final String weaponName;
 
     /**
-     * Base damage of the weapon, from ValueMax
+     * Base damage of the weapon, from ValueMax.
      */
     private final int baseDamage;
 
     /**
-     * Time (in frames) between shots, from RepeatFrame (default of 6)
+     * Time (in frames) between shots, from RepeatFrame.
+     * Has a default value of 6 if not specified by the weapon data.
      */
     private final int shotInterval;
 
     /**
-     * Values are falloff starting frame, ending frame, and minimum damage.
-     * Damage falloff is linear
-     * Represented by values ReduceStartFrame, ReduceEndFrame, ValueMin in the original structure
+     * Frame at which falloff starts taking effect, from ReduceStartFrame.
      */
-    private final int[] falloffStats;
+    private final int falloffStartingFrame;
 
     /**
-     * Values are starting outer chance, maximum chance, change in chance per shot, and deviation angle.
-     * Represented by values Stand_DegBiasMin, Stand_DegBiasMax, Stand_DegBiasKf, Stand_DegSwerve
-     * When weapons don't have Stand_DegBiasMax specified, the default is 0.25 (?).
+     * Frame at which falloff stops taking effect, from ReduceEndFrame.
      */
-    private final double[] shotDeviationStats;
+    private final int falloffEndingFrame;
 
     /**
-     * Values are initial velocity, initial velocity time (in frames), and slow velocity
-     * Represented by values SpawnSpeed, GoStraightToBrakeStateFrame, GoStraightStateEndMaxSpeed
+     * Minimum damage due to falloff, from ValueMin.
      */
-    private final double[] velocityStats;
+    private final int minimumDamage;
 
-    public Shooter(String weaponName, int baseDamage, int shotInterval, int[] falloffStats,
-                   double[] shotDeviationStats, double[] velocityStats) {
+    /**
+     * Minimum chance that the shot goes towards the outer reticle, from Stand_DegBiasMin.
+     */
+    private final double deviationMinOuterChance;
+
+    /**
+     * Maximum chance that the shot goes towards the outer reticle, from Stand_DegBiasMax.
+     * Has a default value of 0.25 if not specified by the weapon data.
+     */
+    private final double deviationMaxOuterChance;
+
+    /**
+     * The amount that the deviation chance goes up by per shot, from Stand_DegBiasKf.
+     */
+    private final double deviationChangePerShot;
+
+    /**
+     * The maximum angle that the shot can deviate. Dictates the size of the outer reticle. From Stand_DegSwerve.
+     */
+    private final double deviationAngle;
+
+    /**
+     * Initial velocity of the shot, in distance units per frame. From SpawnSpeed.
+     */
+    private final double initialVelocity;
+
+    /**
+     * Amount of frames that the shot will travel at the initial velocity, from GoStraightToBrakeStateFrame.
+     */
+    private final int initialVelocityTime;
+
+    /**
+     * The slower velocity that the shot will slow down to after initialVelocityTime. From GoStraightStateEndMaxSpeed.
+     */
+    private final double slowVelocity;
+
+    public Shooter(String weaponName, int baseDamage, int shotInterval, int falloffStartingFrame,
+                   int falloffEndingFrame, int minimumDamage, double deviationMinOuterChance,
+                   double deviationMaxOuterChance, double deviationChangePerShot, double deviationAngle,
+                   double initialVelocity, int initialVelocityTime, double slowVelocity) {
         // 13 different parameters results in a multitude of different possible errors
         if (!(baseDamage >= 0)) {
             throw new IllegalArgumentException("Base damage must be at least 0");
@@ -43,60 +77,58 @@ public class Shooter implements Weapon {
             throw new IllegalArgumentException("Shot interval must be at least 1");
         }
 
-        if (falloffStats.length != 3) {
-            throw new IllegalArgumentException("Falloff stats array length must be exactly 3");
-        }
-        if (!(falloffStats[0] >= 0)) {
+        if (!(falloffStartingFrame >= 0)) {
             throw new IllegalArgumentException("Falloff starting frame must be at least 0");
         }
-        if (!(falloffStats[1] >= falloffStats[0])) {
+        if (!(falloffEndingFrame >= falloffStartingFrame)) {
             throw new IllegalArgumentException("Falloff ending frame must be at least equal to ending frame");
         }
-        if (!(falloffStats[2] >= 0)) {
+        if (!(minimumDamage >= 0)) {
             throw new IllegalArgumentException("Falloff minimum damage must be at least 0");
         }
 
-        if (shotDeviationStats.length != 4) {
-            throw new IllegalArgumentException("Shot deviation stats array length must be exactly 4");
-        }
-        if (!(shotDeviationStats[0] >= 0.0)) {
+        if (!(deviationMinOuterChance >= 0.0)) {
             throw new IllegalArgumentException("Shot deviation minimum chance must be at least 0");
         }
-        if (!(shotDeviationStats[0] <= 1.0)) {
+        if (!(deviationMinOuterChance <= 1.0)) {
             throw new IllegalArgumentException("Shot deviation minimum chance must be at most 1.0");
         }
-        if (!(shotDeviationStats[1] >= shotDeviationStats[0])) {
+        if (!(deviationMaxOuterChance >= deviationMinOuterChance)) {
             throw new IllegalArgumentException("Shot deviation maximum chance must be at least equal to starting chance");
         }
-        if (!(shotDeviationStats[1] <= 1.0)) {
+        if (!(deviationMaxOuterChance <= 1.0)) {
             throw new IllegalArgumentException("Shot deviation maximum chance must be at most 1.0");
         }
-        if (!(shotDeviationStats[2] >= 0)) {
+        if (!(deviationChangePerShot >= 0)) {
             throw new IllegalArgumentException("Shot deviation chance change per shot must be at least 0");
         }
-        if (!(shotDeviationStats[3] >= 0)) {
+        if (!(deviationAngle >= 0)) {
             throw new IllegalArgumentException("Shot deviation angle must be at least 0");
         }
 
-        if (velocityStats.length != 3) {
-            throw new IllegalArgumentException("Velocity stats array length must be exactly 4");
-        }
-        if (!(velocityStats[0] > 0)) {
+        if (!(initialVelocity > 0)) {
             throw new IllegalArgumentException("Velocity starting value must be greater than 0");
         }
-        if (!((velocityStats[1] % 1) == 0)) {
-            throw new IllegalArgumentException("Velocity starting value time must be a whole number");
+        if (!(initialVelocityTime > 0)) {
+            throw new IllegalArgumentException("Velocity starting value time must be greater than 0");
         }
-        if (!(velocityStats[2] > 0)) {
+        if (!(slowVelocity > 0)) {
             throw new IllegalArgumentException("Velocity slow speed must be greater than 0");
         }
 
         this.weaponName = weaponName;
         this.baseDamage = baseDamage;
         this.shotInterval = shotInterval;
-        this.falloffStats = falloffStats;
-        this.shotDeviationStats = shotDeviationStats;
-        this.velocityStats = velocityStats;
+        this.falloffStartingFrame = falloffStartingFrame;
+        this.falloffEndingFrame = falloffEndingFrame;
+        this.minimumDamage = minimumDamage;
+        this.deviationMinOuterChance = deviationMinOuterChance;
+        this.deviationMaxOuterChance = deviationMaxOuterChance;
+        this.deviationChangePerShot = deviationChangePerShot;
+        this.deviationAngle = deviationAngle;
+        this.initialVelocity = initialVelocity;
+        this.initialVelocityTime = initialVelocityTime;
+        this.slowVelocity = slowVelocity;
     }
 
     /**
@@ -111,15 +143,15 @@ public class Shooter implements Weapon {
             throw new IllegalArgumentException("Frames must be at least 0");
         }
 
-        if (frames <= falloffStats[0]) {
+        if (frames <= falloffStartingFrame) {
             return getBaseDamage();
-        } else if (frames > falloffStats[1]) {
-            return falloffStats[2];
+        } else if (frames > falloffEndingFrame) {
+            return minimumDamage;
         }
 
         // calculate damage lost per frame
-        double lostPerFrame = (getBaseDamage() - falloffStats[2]) / (double) (falloffStats[1] - falloffStats[0]);
-        return (int) (getBaseDamage() - ((frames - falloffStats[0]) * lostPerFrame));
+        double lostPerFrame = (getBaseDamage() - minimumDamage) / (double) (falloffEndingFrame - falloffStartingFrame);
+        return (int) (getBaseDamage() - ((frames - falloffStartingFrame) * lostPerFrame));
     }
 
     /**
@@ -134,12 +166,12 @@ public class Shooter implements Weapon {
             throw new IllegalArgumentException("Previous shots must be at least 0");
         }
 
-        double shotDeviationChance = Math.min(shotDeviationStats[0] + (shotDeviationStats[2] * previousShots),
-                shotDeviationStats[1]); // enforce the maximum
+        double shotDeviationChance = Math.min(deviationMinOuterChance + (deviationChangePerShot * previousShots),
+                deviationMaxOuterChance); // enforce the maximum
         if (Math.random() < shotDeviationChance) {
             // Shot deviation seems to be a random angle with an even distribution, but can't confirm
-            // Return a random number between -shotDeviationStats[3] and +shotDeviationStats[3]
-            return ((Math.random() - 0.5) * 2) * shotDeviationStats[3];
+            // Return a random number between -deviationAngle and +deviationAngle
+            return ((Math.random() - 0.5) * 2) * deviationAngle;
         } else return 0.0;
     }
 
@@ -154,12 +186,12 @@ public class Shooter implements Weapon {
             throw new IllegalArgumentException("Frames must be at least 0");
         }
 
-        int firstPhaseFrames = Math.min(frames, (int) velocityStats[1]);
-        int secondPhaseFrames = Math.max(frames - (int) velocityStats[1], 0);
-        // second phase distance seems to max out at 2*velocityStats[2] units
+        int firstPhaseFrames = Math.min(frames, initialVelocityTime);
+        int secondPhaseFrames = Math.max(frames - initialVelocityTime, 0);
+        // second phase distance seems to max out at 2*slowVelocity units
         // We approximated that it follows the infinite series 1 + 1/2 + 1/4 + 1/8 ....
         double secondPhaseMultiplier = 2 * (1 - (1 / Math.pow(2, secondPhaseFrames)));
-        return (velocityStats[0] * firstPhaseFrames) + (velocityStats[2] * secondPhaseMultiplier);
+        return (initialVelocity * firstPhaseFrames) + (slowVelocity * secondPhaseMultiplier);
     }
 
     /**
@@ -168,7 +200,7 @@ public class Shooter implements Weapon {
      * @return Maximum weapon range in distance units.
      */
     public double calculateRange() {
-        return (velocityStats[0] * velocityStats[1]) + (velocityStats[2] * 2);
+        return (initialVelocity * initialVelocityTime) + (slowVelocity * 2);
     }
 
     /**
