@@ -39,6 +39,12 @@ public class Weapons {
             19.564, 19.564, 19.564,
             20
     );
+    public static final Splatling heavySplatling = new Splatling(
+        "Heavy Splatling", 30, 4, 
+        11, 19, 15, 
+        0.01, 0.30, 0.02, 
+        3.3, 1.05, 8, 
+        1.5105, 50, 75,72,2);
 
     public static final Weapon[] weapons = new Weapon[]{splattershot, jetSquelcher, aerospray, splatCharger,
     eliter4k, bamboozler};
