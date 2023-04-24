@@ -118,23 +118,26 @@ public class Splatling extends BaseShooter implements Weapon {
             So Splatlings have an annoying factor in how their velocity and time spent shooting is directly related to their charge rate
             So I wipped up this in order to calculate their fire rate based off of their charge time
         */
-        if (currentCharge==0) return 0;
-        double timeIncrement = (double) timeRing1 /chargeRing1;
-        double timeSpentShooting = 0;
-        for (int fireTime = 0; fireTime<chargeRing2; fireTime++) {
-            if (fireTime==chargeRing1) timeIncrement*=timeMultiplier;
-            timeSpentShooting+=timeIncrement;
-            //System.out.println(timeIncrement);
-            if (currentCharge==fireTime) break;
+        if (currentCharge==0) return 0; // If there is no charge, returns no fire time
+        if (currentCharge>chargeRing2) currentCharge=chargeRing2; // If the charge wanted is greater than that of the max possible charge sets the wanted charge to the maximum
+        double timeIncrement = (double) timeRing1 /chargeRing1; // Calculation to determine the increase in time spent shooting based on the time spent shooting at the first ring interval
+        double timeSpentShooting = 0; // Returned value that decided how long a weapon spends shooting
+        for (int fireTime = 0; fireTime<chargeRing2; fireTime++) { // Goes through each frame of the charge
+            if (fireTime==chargeRing1) timeIncrement*=timeMultiplier; // If the frame is greater than that of the max charge for the first ring, increases the increment that gets added to time spent shooting by either double or quadruple
+            timeSpentShooting+=timeIncrement; // Adds the timeIncrement to timespentshooting
+            if (currentCharge==fireTime) break; // once the fireTime reaches the requested charge, it'll stop here
         }
         //timeSpentShooting=Math.round(timeSpentShooting);
-        return ((int)timeSpentShooting);
+        return ((int)timeSpentShooting); // And spit out the final value it had
     }
 
     @Override
     public int calculateDamageOverTime(double targetDistance, double targetXOffset, int time) {
+        /*
+            Outside of firingTime and its stuff, this functions identically to the one for the Shooter class
+        */
         if (time == 0) return 0;
-        int firingTime = get_fire_time(time);
+        int firingTime = get_fire_time(time); // Calculates the time that the Splatling spends firing
         //System.out.println(firingTime);
         int damageDealt = 0;
         int numShots = ((firingTime - 1) / shotInterval) + 1; // always shoots on the first frame
@@ -164,7 +167,7 @@ public class Splatling extends BaseShooter implements Weapon {
 
     @Override
     public String toString() {
-        return String.format("%s shooter, dealing %.1f damage per shot and %.1f shots per second",
+        return String.format("%s, dealing %.1f damage per shot and %.1f shots per second",
                 getWeaponName(), getBaseDamage() / 10.0, getBaseFireRate());
     }
 }
