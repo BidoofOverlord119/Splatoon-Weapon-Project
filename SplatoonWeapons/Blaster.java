@@ -19,78 +19,61 @@ public class Blaster implements Weapon {
     private final double mainRange;
 
     /* 
-     * A Dictionary for storing the radius and damage dealt in that radius by the blast caused by the projectile.
+     * Damage Dealt in the close radius of the blast caused at the end of the projectile's lifespan
     */
-    private final Dictionary<Double, Integer> damageRanges;
+    private final int blastDamageNear;
+
+    /* 
+     * Damage Dealt in the far radius of the blast caused at the end of the projectile's lifespan
+    */
+    private final int blastDamageFar;
+
+    /* 
+     * The near radius of the blast caused at the end of the projectile's lifespan
+    */
+    private final double blastRangeNear;
+
+    /* 
+     * The far radius of the blast caused at the end of the projectile's lifespan
+    */
+    private final double blastRangeFar;
+
+    
     
     /* 
      * Fire Rate variable
     */
     private final int shotInterval;
 
-    public Blaster(String weaponName, int baseDamage, int blastDamage1, int blastDamage2,
-                   double mainRange, double blastRange1, double blastRange2, int shotInterval) {
+    public Blaster(String weaponName, int baseDamage, int blastDamageNear, int blastDamageFar,
+                   double mainRange, double blastRangeNear, double blastRangeFar, int shotInterval) {
         this.weaponName = weaponName;
         this.baseDamage = baseDamage;
         this.mainRange = mainRange;
         this.shotInterval = shotInterval;
-        this.damageRanges =  new Hashtable<>();
-        double rangeHelper = blastRange1;
-        this.damageRanges.put(rangeHelper, blastDamage1);
-        rangeHelper = blastRange2;
-        this.damageRanges.put(rangeHelper, blastDamage2);
+        this.blastDamageNear = blastDamageNear;
+        this.blastDamageFar = blastDamageFar;
+        this.blastRangeNear = blastRangeNear;
+        this.blastRangeFar = blastRangeFar;
     }
 
-    /* public int calculateHit(double targetDistance, double targetXOffset, int previousShots, int baseDamage,
-                            int falloffStartingFrame, int falloffEndingFrame, int minimumDamage,
-                            double deviationMinOuterChance, double deviationMaxOuterChance,
-                            double deviationChangePerShot, double deviationAngle, double initialVelocity,
-                            int initialVelocityTime, double slowVelocity) {
-        if (!(targetDistance >= 0)) {
-            throw new IllegalArgumentException("Target distance must be at least 0");
-        }
-        if (!(previousShots >= 0)) {
-            throw new IllegalArgumentException("Previous shots must be at least 0");
-        }
-
-        double targetSize = 0.7; // (horizontal) size of target in distance units
-        if (targetDistance > calculateRange(initialVelocity, initialVelocityTime, slowVelocity)) {
-            return 0;
-        }
-        // The shot's angle must be between these two to hit
-        // Math.atan is in radians, needs to be converted to degrees
-        double targetAngleLeft = Math.toDegrees(Math.atan((targetXOffset - (0.5 * targetSize)) / targetDistance));
-        double targetAngleRight = Math.toDegrees(Math.atan((targetXOffset + (0.5 * targetSize)) / targetDistance));
-        double shotDeviationAngle = calculateShotDeviation(previousShots, deviationMinOuterChance,
-                deviationMaxOuterChance, deviationChangePerShot, deviationAngle);
-        if (shotDeviationAngle <= targetAngleLeft || shotDeviationAngle >= targetAngleRight) {
-            return 0;
-        }
-        for (int frames = 0; frames < 60; frames++) {
-            // todo: calculate when the shot should stop based on velocity
-            // doesn't really seem to matter as this loop should always return at some value
-            // 60 frames should be more than enough
-            double shotDistance = calculateDistance(frames, initialVelocity, initialVelocityTime, slowVelocity);
-            if (shotDistance >= targetDistance) {
-                return calculateFalloff(frames, baseDamage, falloffStartingFrame, falloffEndingFrame, minimumDamage);
-            }
-        }
-        return 0;
-    } */
     public int calculateDamage(double targetDistance,double targetXOffset) { // chargeState should be 0 to 1 and represents charge percentage
         if (!(targetDistance >= 0)) {
             throw new IllegalArgumentException("Target distance must be at least 0");
         }
-        double targetYOffset = targetDistance - mainRange;
+        
         if (targetDistance<=mainRange) return baseDamage;
-        for (Double thing : damageRanges.keys()) {
+        double targetYOffset = targetDistance - mainRange;
+        //return 6;
+        if (targetYOffset<=blastRangeNear){
             return 6;
-            //if (targetYOffset<=)
         }
+
+        return 42;
             
     }
 
-    public int calculateHit(double targetDistance, double targetXOffset, double chargeState) {
+    /* public int calculateHit(double targetDistance, double targetXOffset, double chargeState) {
         if (!(targetDistance >= 0)) {
             throw new IllegalArgumentException("Target distance must be at least 0");
         }
@@ -107,7 +90,7 @@ public class Blaster implements Weapon {
         }
 
         return calculateDamage(chargeState);
-    }
+    } */
 
 
 
