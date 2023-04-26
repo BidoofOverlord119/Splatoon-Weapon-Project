@@ -3,35 +3,40 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 
 public class Blaster implements Weapon {
-    // TODO: COMMENTS!
-
+    /* 
+     * The name given to the weapon.
+    */
     private final String weaponName;
-    private final int baseDamage;
-    //private final int blastDamage1;
-    //private final int blastDamage2;
 
+    /* 
+     * The damage dealt by the projectile on a direct impact.
+    */
+    private final int baseDamage;
+    
+    /* 
+     * The distance the projectile travels.
+    */
     private final double mainRange;
+
+    /* 
+     * A Dictionary for storing the radius and damage dealt in that radius by the blast caused by the projectile.
+    */
     private final Dictionary<Double, Integer> damageRanges;
     
-    //private final double blastRange1;
-    //private final double blastRange2;
+    /* 
+     * Fire Rate variable
+    */
     private final int shotInterval;
 
     public Blaster(String weaponName, int baseDamage, int blastDamage1, int blastDamage2,
                    double mainRange, double blastRange1, double blastRange2, int shotInterval) {
         this.weaponName = weaponName;
         this.baseDamage = baseDamage;
-        //this.blastDamage1 = blastDamage1;
-        //this.blastDamage2 = blastDamage2;
         this.mainRange = mainRange;
-        //this.blastRange1 = blastRange1;
-        //this.blastRange2 = blastRange2;
         this.shotInterval = shotInterval;
         this.damageRanges =  new Hashtable<>();
-        //damageHelper = blastDamage1;
         double rangeHelper = blastRange1;
         this.damageRanges.put(rangeHelper, blastDamage1);
-        //damageHelper = blastDamage2;
         rangeHelper = blastRange2;
         this.damageRanges.put(rangeHelper, blastDamage2);
     }
@@ -72,6 +77,37 @@ public class Blaster implements Weapon {
         }
         return 0;
     } */
+    public int calculateDamage(double targetDistance,double targetXOffset) { // chargeState should be 0 to 1 and represents charge percentage
+        if (!(targetDistance >= 0)) {
+            throw new IllegalArgumentException("Target distance must be at least 0");
+        }
+        double targetYOffset = targetDistance - mainRange;
+        if (targetDistance<=mainRange) return baseDamage;
+        for (Double thing : damageRanges.keys()) {
+            return 6;
+            //if (targetYOffset<=)
+        }
+            
+    }
+
+    public int calculateHit(double targetDistance, double targetXOffset, double chargeState) {
+        if (!(targetDistance >= 0)) {
+            throw new IllegalArgumentException("Target distance must be at least 0");
+        }
+
+        double targetSize = 0.7;
+        double range = mainRange;
+        if (range < targetDistance) {
+            return -1;
+        }
+        // chargers don't have shot deviation, so if the x offset is more than half the target's size
+        // in either direction it will miss
+        if (((targetSize / 2.0) - Math.abs(targetXOffset)) < 0) {
+            return -1;
+        }
+
+        return calculateDamage(chargeState);
+    }
 
 
 
@@ -80,7 +116,7 @@ public class Blaster implements Weapon {
         if (time == 0) return 0;
         int damageDealt = 0;
         int numShots = ((time - 1) / shotInterval) + 1; // always shoots on the first frame
-        for (int i = 0; i<numShots;i++){
+        for (int i = 0; i<numShots;i++) {
             damageDealt+= i; // change i to Calculate hit when implemented. 
         }
         return 1250;
@@ -88,7 +124,7 @@ public class Blaster implements Weapon {
 
     @Override
     public String toString() {
-        return String.format("%s blaster, dealing %.1f damage per shot and %.1f shots per second",
+        return String.format("%s, dealing %.1f damage per shot and %.1f shots per second",
                 getWeaponName(), getBaseDamage() / 10.0, getBaseFireRate());
     }
 
