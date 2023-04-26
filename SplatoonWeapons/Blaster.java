@@ -41,11 +41,11 @@ public class Blaster implements Weapon {
             throw new IllegalArgumentException("First shot delay must be at least 0");
         }
 
-        if (!(blastDamageNear >= 0)) {
-            throw new IllegalArgumentException("Near blast damage must be at least 0");
+        if (!(blastDamageFar >= 0)) {
+            throw new IllegalArgumentException("Far blast damage must be at least 0");
         }
-        if (!(blastDamageNear <= blastDamageFar)) {
-            throw new IllegalArgumentException("Near blast damage must be less than or equal to far blast damage");
+        if (!(blastDamageNear >= blastDamageFar)) {
+            throw new IllegalArgumentException("Near blast damage must be greater than or equal to far blast damage");
         }
 
         if (!(blastNearRadius > 0)) {
