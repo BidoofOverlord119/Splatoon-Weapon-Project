@@ -44,7 +44,7 @@ public class Weapons {
         11, 19, 150,
         0.01, 0.33, 0.02, 
         3.3, 1.05, 8, 
-        1.5105, 50, 75,72,2
+        1.5105, 50, 75,72,2,300
         );
 
         public static final Splatling hydraSplatling = new Splatling(
@@ -52,7 +52,14 @@ public class Weapons {
         11, 19, 160,
         0.01, 0.30, 0.02, 
         3, 1.05, 8, 
-        1.94, 120, 150,120,4);
+        1.94, 120, 150,120,4,400);
+
+        public static final Splatling miniSplatling = new Splatling(
+        "Mini Splatling", 320, 4,
+        11, 19, 160,
+        0.01, 0.30, 0.02, 
+        4, 1.05, 8, 
+        1.105, 20, 30,36,2,320);
 
     public static final Weapon[] weapons = new Weapon[]{splattershot, jetSquelcher, aerospray, splatCharger,
     eliter4k, bamboozler,heavySplatling,hydraSplatling};

@@ -1,6 +1,7 @@
 package SplatoonWeapons;
 
 public class Splatling extends BaseShooter implements Weapon {
+    /* Most of these variables are the same as the ones in Shooter */
     private final String weaponName;
     private final int baseDamage;
     private final int shotInterval;
@@ -31,8 +32,15 @@ public class Splatling extends BaseShooter implements Weapon {
     Multiplier used in calculating the increase in frames gained per charge value
      */
     private final int timeMultiplier;
+    /* 
+    Damage dealt per hit when the Splatling is fully charged.
+    */
+    private final int fullChargeDamage;
 
-    public Splatling(String weaponName, int baseDamage, int shotInterval, int falloffStartingFrame, int falloffEndingFrame, int minimumDamage, double deviationMinOuterChance, double deviationMaxOuterChance, double deviationChangePerShot, double deviationAngle, double initialVelocity, int initialVelocityTime, double slowVelocity, int chargeRing1, int chargeRing2, int timeRing1, int timeMultiplier) {
+    public Splatling(String weaponName, int baseDamage, int shotInterval, int falloffStartingFrame, int falloffEndingFrame, int minimumDamage, double deviationMinOuterChance, 
+    double deviationMaxOuterChance, double deviationChangePerShot, double deviationAngle, 
+    double initialVelocity, int initialVelocityTime, double slowVelocity, int chargeRing1, 
+    int chargeRing2, int timeRing1, int timeMultiplier, int fullChargeDamage) {
 
         if (!(baseDamage >= 0)) {
             throw new IllegalArgumentException("Base damage must be at least 0");
@@ -95,6 +103,12 @@ public class Splatling extends BaseShooter implements Weapon {
         if (!(timeMultiplier >= 0)) {
             throw new IllegalArgumentException("Time Multiplier must be at least 0");
         }
+        if (!(fullChargeDamage >= 0)) {
+            throw new IllegalArgumentException("Full Charge Damage must be at least 0");
+        }
+        if (!(fullChargeDamage >= baseDamage)) {
+            throw new IllegalArgumentException("Full Charge Damage must be at least greater than Base Damage");
+        }
         this.weaponName = weaponName;
         this.baseDamage = baseDamage;
         this.shotInterval = shotInterval;
@@ -112,6 +126,7 @@ public class Splatling extends BaseShooter implements Weapon {
         this.chargeRing2 = chargeRing2;
         this.timeRing1 = timeRing1;
         this.timeMultiplier = timeMultiplier;
+        this.fullChargeDamage = fullChargeDamage;
     }
     public int get_fire_time(int currentCharge) {
         /* 
@@ -139,11 +154,21 @@ public class Splatling extends BaseShooter implements Weapon {
         if (time == 0) return 0;
         int firingTime = get_fire_time(time); // Calculates the time that the Splatling spends firing
         //System.out.println(firingTime);
+        int damageUsedHere;
+        int minDamageUsedHere;
+        if (time>chargeRing2) {
+            damageUsedHere=fullChargeDamage;
+            minDamageUsedHere=fullChargeDamage;
+        }
+        else {
+            damageUsedHere=baseDamage;
+            minDamageUsedHere=minimumDamage;
+        }
         int damageDealt = 0;
         int numShots = ((firingTime - 1) / shotInterval) + 1; // always shoots on the first frame
         for (int i = 0; i < numShots; i++) {
-            damageDealt += calculateHit(targetDistance, targetXOffset, i, baseDamage, falloffStartingFrame,
-                    falloffEndingFrame, minimumDamage, deviationMinOuterChance, deviationMaxOuterChance,
+            damageDealt += calculateHit(targetDistance, targetXOffset, i, damageUsedHere, falloffStartingFrame,
+                    falloffEndingFrame, minDamageUsedHere, deviationMinOuterChance, deviationMaxOuterChance,
                     deviationChangePerShot, deviationAngle, initialVelocity, initialVelocityTime, slowVelocity);
         }
         return damageDealt;
