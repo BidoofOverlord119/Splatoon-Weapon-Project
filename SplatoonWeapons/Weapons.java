@@ -52,20 +52,32 @@ public class Weapons {
             11, 19, 160,
             0.01, 0.30, 0.02,
             3, 1.05, 8,
-            1.94, 120, 150, 120, 4, 400);
+            1.94, 120, 150, 120, 4, 400
+    );
 
     public static final Splatling miniSplatling = new Splatling(
             "Mini Splatling", 320, 4,
             11, 19, 160,
             0.01, 0.30, 0.02,
             4, 1.05, 8,
-            1.105, 20, 30, 36, 2, 320);
+            1.105, 20, 30, 36, 2, 320
+    );
 
     public static final Blaster blaster = new Blaster(
-            "Blaster", 1250, (0.945 * 9) + (0.9131 * 2), 50, 10,
-            700, 500, 0.94, 3.3
+            "Blaster", 1250, (0.945 * 9) + (0.9131 * 2), 50,
+            10, 700, 500, 0.94, 3.3
+    );
+
+    public static final Blaster rangeBlaster = new Blaster(
+            "Range Blaster", 1250, (1.08 * 11) + (1.0073 * 2), 60,
+            10, 700, 500, 1, 3.5
+    );
+
+    public static final Blaster clashBlaster = new Blaster(
+            "Clash Blaster", 600, (0.935 * 8) + (0.92715 * 2), 20,
+            8, 300, 300, 1, 4
     );
 
     public static final Weapon[] weapons = new Weapon[]{splattershot, jetSquelcher, aerospray, splatCharger,
-            eliter4k, bamboozler, heavySplatling, hydraSplatling, blaster};
+            eliter4k, bamboozler, heavySplatling, hydraSplatling, miniSplatling, blaster, rangeBlaster, clashBlaster};
 }
