@@ -115,6 +115,10 @@ public class Shooter extends BaseShooter implements Weapon {
      */
     @Override
     public int calculateDamageOverTime(double targetDistance, double targetXOffset, int time) {
+        if (!(time >= 0)) {
+            throw new IllegalArgumentException("Time cannot be negative");
+        }
+
         if (time == 0) return 0;
         int damageDealt = 0;
         int numShots = ((time - 1) / shotInterval) + 1; // always shoots on the first frame
