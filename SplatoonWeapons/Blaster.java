@@ -61,15 +61,15 @@ public class Blaster implements Weapon {
         if (!(targetDistance >= 0)) {
             throw new IllegalArgumentException("Target distance must be at least 0");
         }
-        
         if (targetDistance<=mainRange) return baseDamage;
         double targetYOffset = targetDistance - mainRange;
-        //return 6;
-        if (targetYOffset<=blastRangeNear){
-            return 6;
+        if (targetYOffset<=blastRangeNear||targetXOffset<=blastRangeNear){
+            return blastDamageNear;
         }
-
-        return 42;
+        else if (targetYOffset<=blastRangeFar||targetXOffset<=blastRangeFar) {
+            return blastDamageFar;
+        }
+        return 0;
             
     }
 
@@ -100,9 +100,9 @@ public class Blaster implements Weapon {
         int damageDealt = 0;
         int numShots = ((time - 1) / shotInterval) + 1; // always shoots on the first frame
         for (int i = 0; i<numShots;i++) {
-            damageDealt+= i; // change i to Calculate hit when implemented. 
+            damageDealt+= calculateDamage(targetDistance, targetXOffset); // change i to Calculate hit when implemented. 
         }
-        return 1250;
+        return damageDealt;
     }
 
     @Override
