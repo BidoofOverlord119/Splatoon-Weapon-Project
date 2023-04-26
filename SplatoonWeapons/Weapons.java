@@ -55,5 +55,5 @@ public class Weapons {
         1.94, 120, 150,120,4);
 
     public static final Weapon[] weapons = new Weapon[]{splattershot, jetSquelcher, aerospray, splatCharger,
-    eliter4k, bamboozler,heavySplatling};
+    eliter4k, bamboozler,heavySplatling,hydraSplatling};
 }
