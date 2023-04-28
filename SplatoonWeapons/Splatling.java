@@ -1,7 +1,8 @@
 package SplatoonWeapons;
 
 public class Splatling extends BaseShooter implements Weapon {
-    /* Most of these variables are the same as the ones in Shooter */
+    // TODO: COMMENTS AND BOUNDS CHECKING!
+
     private final String weaponName;
     private final int baseDamage;
     private final int shotInterval;
@@ -12,35 +13,41 @@ public class Splatling extends BaseShooter implements Weapon {
     private final double deviationMaxOuterChance;
     private final double deviationChangePerShot;
     private final double deviationAngle;
-    private final double initialVelocity;
+    private final double initialVelocityMin; // SpawnSpeed
+    private final double initialVelocityMax; // SpawnSpeedFirstLastAndSecond
     private final int initialVelocityTime;
     private final double slowVelocity;
-    /* 
-     * Time (in frames) that it takes for the Splatling to reach the first ring of its reticle while charging. (default of 50)
+
+    /*
+     * Time (in frames) that it takes for the Splatling to charge the first ring of its reticle while charging. (default of 50)
      */
-    private final int chargeRing1;
+    private final int chargeRing1; // ChargeFrame_First
+
+    /*
+     * Time (in frames) that it takes for the Splatling to charge the second ring of its reticle while charging. (default of 75)
+     */
+    private final int chargeRing2; // ChargeFrame_Second
 
     /* 
-     * Time (in frames) that it takes for the Splatling to reach the second ring of its reticle while charging. (default of 75)
+    Time (in frames) that it takes to fire the Splatling's first (fully charged) ring
      */
-    private final int chargeRing2;
+    private final int timeRing1; // MaxShootingFrame_First
+
     /* 
-    Time (in frames) that it takes to fire the Splatling's full burst at one full ring
+    Time (in frames) that it takes to fire the Splatling's first (fully charged) ring
      */
-    private final int timeRing1;
-    /* 
-    Multiplier used in calculating the increase in frames gained per charge value
-     */
-    private final int timeMultiplier;
+    private final int timeRing2; // MaxShootingFrame_Second
+
     /* 
     Damage dealt per hit when the Splatling is fully charged.
     */
     private final int fullChargeDamage;
 
-    public Splatling(String weaponName, int baseDamage, int shotInterval, int falloffStartingFrame, int falloffEndingFrame, int minimumDamage, double deviationMinOuterChance, 
-    double deviationMaxOuterChance, double deviationChangePerShot, double deviationAngle, 
-    double initialVelocity, int initialVelocityTime, double slowVelocity, int chargeRing1, 
-    int chargeRing2, int timeRing1, int timeMultiplier, int fullChargeDamage) {
+    public Splatling(String weaponName, int baseDamage, int shotInterval, int falloffStartingFrame,
+                     int falloffEndingFrame, int minimumDamage, double deviationMinOuterChance,
+                     double deviationMaxOuterChance, double deviationChangePerShot, double deviationAngle,
+                     double initialVelocityMin, double initialVelocityMax, int initialVelocityTime, double slowVelocity,
+                     int chargeRing1, int chargeRing2, int timeRing1, int timeRing2, int fullChargeDamage) {
 
         if (!(baseDamage >= 0)) {
             throw new IllegalArgumentException("Base damage must be at least 0");
@@ -78,8 +85,11 @@ public class Splatling extends BaseShooter implements Weapon {
             throw new IllegalArgumentException("Shot deviation angle must be at least 0");
         }
 
-        if (!(initialVelocity > 0)) {
-            throw new IllegalArgumentException("Velocity starting value must be greater than 0");
+        if (!(initialVelocityMin > 0)) {
+            throw new IllegalArgumentException("Starting velocity minimum value must be greater than 0");
+        }
+        if (!(initialVelocityMax >= initialVelocityMin)) {
+            throw new IllegalArgumentException("Starting velocity maximum must be greater than 0");
         }
         if (!(initialVelocityTime > 0)) {
             throw new IllegalArgumentException("Velocity starting value time must be greater than 0");
@@ -100,7 +110,7 @@ public class Splatling extends BaseShooter implements Weapon {
         if (!(timeRing1 >= 0)) {
             throw new IllegalArgumentException("Fire Time for Ring 1 must be at least 0");
         }
-        if (!(timeMultiplier >= 0)) {
+        if (!(timeRing2 >= 0)) {
             throw new IllegalArgumentException("Time Multiplier must be at least 0");
         }
         if (!(fullChargeDamage >= 0)) {
@@ -119,59 +129,76 @@ public class Splatling extends BaseShooter implements Weapon {
         this.deviationMaxOuterChance = deviationMaxOuterChance;
         this.deviationChangePerShot = deviationChangePerShot;
         this.deviationAngle = deviationAngle;
-        this.initialVelocity = initialVelocity;
+        this.initialVelocityMin = initialVelocityMin;
+        this.initialVelocityMax = initialVelocityMax;
         this.initialVelocityTime = initialVelocityTime;
         this.slowVelocity = slowVelocity;
         this.chargeRing1 = chargeRing1;
         this.chargeRing2 = chargeRing2;
         this.timeRing1 = timeRing1;
-        this.timeMultiplier = timeMultiplier;
+        this.timeRing2 = timeRing2;
         this.fullChargeDamage = fullChargeDamage;
     }
-    public int get_fire_time(int currentCharge) {
-        /* 
-            So Splatlings have an annoying factor in how their velocity and time spent shooting is directly related to their charge rate
-            So I wipped up this in order to calculate their fire rate based off of their charge time
-        */
-        if (currentCharge==0) return 0; // If there is no charge, returns no fire time
-        if (currentCharge>chargeRing2) currentCharge=chargeRing2; // If the charge wanted is greater than that of the max possible charge sets the wanted charge to the maximum
-        double timeIncrement = (double) timeRing1 /chargeRing1; // Calculation to determine the increase in time spent shooting based on the time spent shooting at the first ring interval
-        double timeSpentShooting = 0; // Returned value that decided how long a weapon spends shooting
-        for (int fireTime = 0; fireTime<chargeRing2; fireTime++) { // Goes through each frame of the charge
-            if (fireTime==chargeRing1) timeIncrement*=timeMultiplier; // If the frame is greater than that of the max charge for the first ring, increases the increment that gets added to time spent shooting by either double or quadruple
-            timeSpentShooting+=timeIncrement; // Adds the timeIncrement to timespentshooting
-            if (currentCharge==fireTime) break; // once the fireTime reaches the requested charge, it'll stop here
+
+    // When in the first ring, shot velocity scales linearly from initialVelocityMin to initialVelocityMax.
+    // When in the second ring, it's always initialVelocityMax.
+    public double calculateInitialVelocity(int currentCharge) {
+        if (currentCharge >= chargeRing1) {
+            return initialVelocityMax;
         }
-        //timeSpentShooting=Math.round(timeSpentShooting);
-        return ((int)timeSpentShooting); // And spit out the final value it had
+        double scalingFactor = currentCharge / (double) chargeRing1;
+        return initialVelocityMin + ((initialVelocityMax - initialVelocityMin) * scalingFactor);
+    }
+
+    // The firing time of a Splatling is done in two phases.
+    // In the first ring, it scales from 0 to timeRing1.
+    // In the second ring, it scales from timeRing1 to timeRing2.
+    public int calculateFireTime(int currentCharge) {
+        int ring2Difference = chargeRing2 - chargeRing1;
+        double firstRingState = Math.min(currentCharge, chargeRing1) / (double) chargeRing1;
+                                 // This keeps it in the bound 0-ring2Difference
+        double secondRingState = Math.min(Math.max(currentCharge - chargeRing1, 0), ring2Difference)
+                    / (double) (ring2Difference);
+
+        int firstRingTime = (int) (timeRing1 * firstRingState);
+        int secondRingTime = (int) ((timeRing2 - timeRing1) * secondRingState);
+
+        return firstRingTime + secondRingTime;
+    }
+
+    // Calculates how much damage will be done to a target by a single charge.
+    public int calculateSingleCharge(double targetDistance, double targetXOffset, int chargeTime) {
+        if (chargeTime == 0) return 0;
+        int firingTime = calculateFireTime(chargeTime); // Calculates the time that the Splatling spends firing
+        // Current damage should be fullChargeDamage if this is a full charge, baseDamage if it isn't
+        int currentDamage = chargeTime >= chargeRing2 ? fullChargeDamage : baseDamage;
+        int damageDealt = 0;
+        int numShots = ((firingTime - 1) / shotInterval) + 1; // always shoots on the first frame
+        for (int i = 0; i < numShots; i++) {
+            damageDealt += calculateHit(targetDistance, targetXOffset, i, currentDamage, falloffStartingFrame,
+                    falloffEndingFrame, minimumDamage, deviationMinOuterChance, deviationMaxOuterChance,
+                    deviationChangePerShot, deviationAngle, calculateInitialVelocity(chargeTime),
+                    initialVelocityTime, slowVelocity);
+        }
+        return damageDealt;
     }
 
     @Override
     public int calculateDamageOverTime(double targetDistance, double targetXOffset, int time) {
-        /*
-            Outside of firingTime and its stuff, this functions identically to the one for the Shooter class
-        */
-        if (time == 0) return 0;
-        int firingTime = get_fire_time(time); // Calculates the time that the Splatling spends firing
-        //System.out.println(firingTime);
-        int damageUsedHere;
-        int minDamageUsedHere;
-        if (time>chargeRing2) {
-            damageUsedHere=fullChargeDamage;
-            minDamageUsedHere=fullChargeDamage;
+        int fullCycleTime = chargeRing2 + timeRing2; // represents the time it takes to fully charge then fire all shots
+        int numFullCharges = time / fullCycleTime;
+        int partialCharge = time % fullCycleTime;
+        int totalDamage = 0;
+
+        // do full charges
+        for (int i = 0; i < numFullCharges; i++) {
+            totalDamage += calculateSingleCharge(targetDistance, targetXOffset, chargeRing2);
         }
-        else {
-            damageUsedHere=baseDamage;
-            minDamageUsedHere=minimumDamage;
+
+        if (partialCharge != 0) {
+            totalDamage += calculateSingleCharge(targetDistance, targetXOffset, partialCharge);
         }
-        int damageDealt = 0;
-        int numShots = ((firingTime - 1) / shotInterval) + 1; // always shoots on the first frame
-        for (int i = 0; i < numShots; i++) {
-            damageDealt += calculateHit(targetDistance, targetXOffset, i, damageUsedHere, falloffStartingFrame,
-                    falloffEndingFrame, minDamageUsedHere, deviationMinOuterChance, deviationMaxOuterChance,
-                    deviationChangePerShot, deviationAngle, initialVelocity, initialVelocityTime, slowVelocity);
-        }
-        return damageDealt;
+        return totalDamage;
     }
 
     @Override
