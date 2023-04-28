@@ -63,18 +63,18 @@ GameParameters= {
                 },
             "Unit":{ # Do not know what any of the following parameters are. I am working on them right now.
                 "0": {
-                "BulletNum":12,
-                "DepletionBulletNum":3, # Don't know
-                "DepletionSpeedRate":0.5,
-                "SpawnPositionOffsetHeight":0,
-                "SpawnPositionRandomCube":0.1,
-                "SpawnPositionWidth":0.8,
-                "SpawnSpeedBase":1.05,
-                "SpawnSpeedRandom":0.36,
-                "SpawnWideDegree":18,
+                "BulletNum":12, # The number of projectiles produced by the attack.
+                "DepletionBulletNum":3, # I can only assume the amount of projectiles that get deleted over time while in the air?
+                "DepletionSpeedRate":0.5, # The rate at which said projectiles are deleted?
+                "SpawnPositionOffsetHeight":0, # The vertical offset of the projectile produced
+                "SpawnPositionRandomCube":0.1, # based on the name, the randomized starting position within a cube made around the weapon from which the projectile spawns?
+                "SpawnPositionWidth":0.8, # The width of the position from which the projectile spawns
+                "SpawnSpeedBase":1.05, # The initial Base Velocity of the projectile
+                "SpawnSpeedRandom":0.36, # Don't know.
+                "SpawnWideDegree":18, # The angular degree at which projectiles are spawned?
                 "SwerveRateBySpeed":0.05,
                 },
-                "1": {
+                "1": { # No clue.
                 "DepletionSpeedRate":0.5,
                 "SpawnPositionOffsetHeight":0,
                 "SpawnPositionRandomCube":0.1,
