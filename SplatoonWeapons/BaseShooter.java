@@ -17,6 +17,19 @@ public abstract class BaseShooter implements Weapon {
         if (!(frames >= 0)) {
             throw new IllegalArgumentException("Frames must be at least 0");
         }
+        if (!(baseDamage >= 0)) {
+            throw new IllegalArgumentException("Base damage must be at least 0");
+        }
+
+        if (!(falloffStartingFrame >= 0)) {
+            throw new IllegalArgumentException("Falloff starting frame must be at least 0");
+        }
+        if (!(falloffEndingFrame >= falloffStartingFrame)) {
+            throw new IllegalArgumentException("Falloff ending frame must be at least equal to ending frame");
+        }
+        if (!(minimumDamage >= 0)) {
+            throw new IllegalArgumentException("Falloff minimum damage must be at least 0");
+        }
 
         if (frames <= falloffStartingFrame) {
             return baseDamage;
@@ -48,6 +61,25 @@ public abstract class BaseShooter implements Weapon {
             throw new IllegalArgumentException("Previous shots must be at least 0");
         }
 
+        if (!(deviationMinOuterChance >= 0.0)) {
+            throw new IllegalArgumentException("Shot deviation minimum chance must be at least 0");
+        }
+        if (!(deviationMinOuterChance <= 1.0)) {
+            throw new IllegalArgumentException("Shot deviation minimum chance must be at most 1.0");
+        }
+        if (!(deviationMaxOuterChance >= deviationMinOuterChance)) {
+            throw new IllegalArgumentException("Shot deviation maximum chance must be at least equal to starting chance");
+        }
+        if (!(deviationMaxOuterChance <= 1.0)) {
+            throw new IllegalArgumentException("Shot deviation maximum chance must be at most 1.0");
+        }
+        if (!(deviationChangePerShot >= 0)) {
+            throw new IllegalArgumentException("Shot deviation chance change per shot must be at least 0");
+        }
+        if (!(deviationAngle >= 0)) {
+            throw new IllegalArgumentException("Shot deviation angle must be at least 0");
+        }
+
         double shotDeviationChance = Math.min(deviationMinOuterChance + (deviationChangePerShot * previousShots),
                 deviationMaxOuterChance); // enforce the maximum
         if (Math.random() < shotDeviationChance) {
@@ -69,6 +101,16 @@ public abstract class BaseShooter implements Weapon {
     public double calculateDistance(int frames, double initialVelocity, int initialVelocityTime, double slowVelocity) {
         if (!(frames >= 0)) {
             throw new IllegalArgumentException("Frames must be at least 0");
+        }
+
+        if (!(initialVelocity > 0)) {
+            throw new IllegalArgumentException("Velocity starting value must be greater than 0");
+        }
+        if (!(initialVelocityTime > 0)) {
+            throw new IllegalArgumentException("Velocity starting value time must be greater than 0");
+        }
+        if (!(slowVelocity > 0)) {
+            throw new IllegalArgumentException("Velocity slow speed must be greater than 0");
         }
 
         int firstPhaseFrames = Math.min(frames, initialVelocityTime);
