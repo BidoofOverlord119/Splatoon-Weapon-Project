@@ -11,8 +11,8 @@ public class Splatling extends BaseShooter implements Weapon {
     private final double deviationMaxOuterChance;
     private final double deviationChangePerShot;
     private final double deviationAngle;
-    private final double initialVelocityMin; // SpawnSpeed
-    private final double initialVelocityMax; // SpawnSpeedFirstLastAndSecond
+    private final double initialVelocityMin;
+    private final double initialVelocityMax;
     private final int initialVelocityTime;
     private final double slowVelocity;
     private final int ring1ChargeTime;
