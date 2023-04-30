@@ -13,13 +13,13 @@ public class Charger implements Weapon {
     /**
      * Constructor for the Charger object.
      *
-     * @param weaponName Friendly name of the weapon.
-     * @param baseDamage Full charge damage of the weapon, from ValueFullCharge.
-     * @param minDamage Damage done by a minimum charge, from ValueMinCharge.
-     * @param maxDamage Maximum damage dealt by a non-full charge, from ValueMaxCharge.
-     * @param fullRange Range of a full-charge shot, from DistanceFullCharge.
-     * @param minRange Range of a minimum-charge shot, from DistanceMinCharge.
-     * @param maxRange Maximum range of a non-full charge, from DistanceMaxCharge.
+     * @param weaponName     Friendly name of the weapon.
+     * @param baseDamage     Full charge damage of the weapon, from ValueFullCharge.
+     * @param minDamage      Damage done by a minimum charge, from ValueMinCharge.
+     * @param maxDamage      Maximum damage dealt by a non-full charge, from ValueMaxCharge.
+     * @param fullRange      Range of a full-charge shot, from DistanceFullCharge.
+     * @param minRange       Range of a minimum-charge shot, from DistanceMinCharge.
+     * @param maxRange       Maximum range of a non-full charge, from DistanceMaxCharge.
      * @param framesToCharge Time (in frames) to reach full charge, from ChargeFrameFullCharge. Has a default value of
      *                       60 if not specified by the weapon data.
      */
@@ -78,8 +78,8 @@ public class Charger implements Weapon {
      * Returns 0 if the shot doesn't hit.
      *
      * @param targetDistance Distance from the player to the target, in distance units.
-     * @param targetXOffset Left-right offset of the target, in distance units.
-     * @param chargeState The charge state of the shot, between 0 and 1 (inclusive).
+     * @param targetXOffset  Left-right offset of the target, in distance units.
+     * @param chargeState    The charge state of the shot, between 0 and 1 (inclusive).
      * @return Damage dealt by the shot. 0 if a miss.
      */
     public int calculateHit(double targetDistance, double targetXOffset, double chargeState) {
