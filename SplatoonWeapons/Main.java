@@ -11,7 +11,7 @@ public class Main {
         double targetXOffset = input.nextDouble();
         System.out.print("How many frames should the weapon fire for (60 FPS)? ");
         int time = input.nextInt();
-        for (Weapon w: Weapons.weapons) {
+        for (Weapon w: Weapons.WEAPONS) {
             System.out.println(w);
             System.out.printf("Weapon dealt %.1f damage over %d frames (%.2f seconds) to a target %.1f units away, " +
                     "with X offset %.2f%n", w.calculateDamageOverTime(targetDistance, targetXOffset, time) / 10.0,
