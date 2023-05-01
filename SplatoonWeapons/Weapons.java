@@ -22,6 +22,20 @@ public class Weapons {
             2.2, 3, 1.8945
     );
 
+    public static final BurstShooter L3_NOZZLENOSE = new BurstShooter(
+            "L-3 Nozzlenose", 290, 4,
+            8, 24, 145,
+            0.01, 0.25, 0.01, 1,
+            2.75, 4, 1.568, 3, 8
+    );
+
+    public static final BurstShooter H3_NOZZLENOSE = new BurstShooter(
+            "H-3 Nozzlenose", 410, 5,
+            8, 24, 205,
+            0.01, 0.25, 0.01, 1,
+            2.875, 4, 2.2698, 3, 20
+    );
+
     public static final Charger SPLAT_CHARGER = new Charger(
             "Splat Charger", 1600, 400, 800,
             24.037, 9.033, 24.037, 60
@@ -76,14 +90,19 @@ public class Weapons {
             8, 300, 300, 1, 4
     );
 
-    public static final Weapon[] WEAPONS = new Weapon[]{SPLATTERSHOT, JET_SQUELCHER, AEROSPRAY, SPLAT_CHARGER,
-            ELITER_4K, BAMBOOZLER, HEAVY_SPLATLING, HYDRA_SPLATLING, MINI_SPLATLING, BLASTER, RANGE_BLASTER, CLASH_BLASTER};
 
-    public static final Shooter[] SHOOTERS = new Shooter[]{SPLATTERSHOT, JET_SQUELCHER, AEROSPRAY};
+    public static final Shooter[] SHOOTERS = new Shooter[]{SPLATTERSHOT, JET_SQUELCHER, AEROSPRAY, H3_NOZZLENOSE,
+            L3_NOZZLENOSE};
 
     public static final Charger[] CHARGERS = new Charger[]{SPLAT_CHARGER, ELITER_4K, BAMBOOZLER};
 
     public static final Splatling[] SPLATLINGS = new Splatling[]{HEAVY_SPLATLING, HYDRA_SPLATLING, MINI_SPLATLING};
 
     public static final Blaster[] BLASTERS = new Blaster[]{BLASTER, RANGE_BLASTER, CLASH_BLASTER};
+
+    public static final Weapon[] WEAPONS = new Weapon[]{SPLATTERSHOT, JET_SQUELCHER, AEROSPRAY, H3_NOZZLENOSE,
+            L3_NOZZLENOSE, SPLAT_CHARGER, ELITER_4K, BAMBOOZLER, HEAVY_SPLATLING, HYDRA_SPLATLING, MINI_SPLATLING,
+            BLASTER, RANGE_BLASTER, CLASH_BLASTER};
+
+    public static final Weapon[][] TYPES = new Weapon[][]{SHOOTERS, CHARGERS, SPLATLINGS, BLASTERS};
 }

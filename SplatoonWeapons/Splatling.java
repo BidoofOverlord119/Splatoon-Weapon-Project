@@ -279,7 +279,7 @@ public class Splatling extends BaseShooter implements Weapon {
 
     @Override
     public String toString() {
-        return String.format("%s, dealing %.1f damage per shot and %.1f shots per second",
+        return String.format("%s splatling, dealing %.1f damage per shot and %.1f shots per second",
                 getWeaponName(), getBaseDamage() / 10.0, getBaseFireRate());
     }
 }
