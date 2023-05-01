@@ -1,19 +1,19 @@
 package SplatoonWeapons;
 
 public class Shooter extends BaseShooter implements Weapon {
-    private final String weaponName;
-    private final int baseDamage;
-    private final int shotInterval;
-    private final int falloffStartingFrame;
-    private final int falloffEndingFrame;
-    private final int minimumDamage;
-    private final double deviationMinOuterChance;
-    private final double deviationMaxOuterChance;
-    private final double deviationChangePerShot;
-    private final double deviationAngle;
-    private final double initialVelocity;
-    private final int initialVelocityTime;
-    private final double slowVelocity;
+    public final String weaponName;
+    public final int baseDamage;
+    public final int shotInterval;
+    public final int falloffStartingFrame;
+    public final int falloffEndingFrame;
+    public final int minimumDamage;
+    public final double deviationMinOuterChance;
+    public final double deviationMaxOuterChance;
+    public final double deviationChangePerShot;
+    public final double deviationAngle;
+    public final double initialVelocity;
+    public final int initialVelocityTime;
+    public final double slowVelocity;
 
     /**
      * Constructor for the Shooter object.

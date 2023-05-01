@@ -1,25 +1,25 @@
 package SplatoonWeapons;
 
 public class Splatling extends BaseShooter implements Weapon {
-    private final String weaponName;
-    private final int baseDamage;
-    private final int shotInterval;
-    private final int falloffStartingFrame;
-    private final int falloffEndingFrame;
-    private final int minimumDamage;
-    private final double deviationMinOuterChance;
-    private final double deviationMaxOuterChance;
-    private final double deviationChangePerShot;
-    private final double deviationAngle;
-    private final double initialVelocityMin;
-    private final double initialVelocityMax;
-    private final int initialVelocityTime;
-    private final double slowVelocity;
-    private final int ring1ChargeTime;
-    private final int ring2ChargeTime;
-    private final int ring1FireTime;
-    private final int ring2FireTime;
-    private final int fullChargeDamage;
+    public final String weaponName;
+    public final int baseDamage;
+    public final int shotInterval;
+    public final int falloffStartingFrame;
+    public final int falloffEndingFrame;
+    public final int minimumDamage;
+    public final double deviationMinOuterChance;
+    public final double deviationMaxOuterChance;
+    public final double deviationChangePerShot;
+    public final double deviationAngle;
+    public final double initialVelocityMin;
+    public final double initialVelocityMax;
+    public final int initialVelocityTime;
+    public final double slowVelocity;
+    public final int ring1ChargeTime;
+    public final int ring2ChargeTime;
+    public final int ring1FireTime;
+    public final int ring2FireTime;
+    public final int fullChargeDamage;
 
     /**
      * Constructor for the Splatling object.

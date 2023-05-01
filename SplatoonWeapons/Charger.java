@@ -1,14 +1,14 @@
 package SplatoonWeapons;
 
 public class Charger implements Weapon {
-    private final String weaponName;
-    private final int baseDamage;
-    private final int minDamage;
-    private final int maxDamage;
-    private final double minRange;
-    private final double maxRange;
-    private final double fullRange;
-    private final int framesToCharge;
+    public final String weaponName;
+    public final int baseDamage;
+    public final int minDamage;
+    public final int maxDamage;
+    public final double minRange;
+    public final double maxRange;
+    public final double fullRange;
+    public final int framesToCharge;
 
     /**
      * Constructor for the Charger object.

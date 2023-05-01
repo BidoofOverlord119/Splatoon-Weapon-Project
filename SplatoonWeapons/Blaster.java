@@ -1,15 +1,15 @@
 package SplatoonWeapons;
 
 public class Blaster implements Weapon {
-    private final String weaponName;
-    private final int baseDamage;
-    private final double mainRange;
-    private final int shotInterval;
-    private final int firstShotDelay;
-    private final int blastDamageNear;
-    private final int blastDamageFar;
-    private final double blastNearRadius;
-    private final double blastFarRadius;
+    public final String weaponName;
+    public final int baseDamage;
+    public final double mainRange;
+    public final int shotInterval;
+    public final int firstShotDelay;
+    public final int blastDamageNear;
+    public final int blastDamageFar;
+    public final double blastNearRadius;
+    public final double blastFarRadius;
 
     /**
      * Constructor for the Blaster object.
