@@ -1,7 +1,6 @@
 package SplatoonWeapons;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -15,11 +14,11 @@ public class Main {
         Weapon[] weaponType;
         while (true) {
             try {
-                weaponType = Weapons.TYPES[input.nextInt() - 1];
+                weaponType = Weapons.TYPES[Integer.parseInt(input.nextLine()) - 1];
                 break;
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Please choose a valid option.");
-            } catch (InputMismatchException e) {
+            } catch (NumberFormatException e) {
                 System.out.println("Invalid input, please try again.");
             }
         }
@@ -30,10 +29,10 @@ public class Main {
         }
         while (true) {
             try {
-                return weaponType[input.nextInt() - 1];
+                return weaponType[Integer.parseInt(input.nextLine()) - 1];
             } catch (IndexOutOfBoundsException e) {
                 System.out.println("Please choose a valid option.");
-            } catch (InputMismatchException e) {
+            } catch (NumberFormatException e) {
                 System.out.println("Invalid input, please try again.");
             }
         }
@@ -44,7 +43,7 @@ public class Main {
         while (true) {
             currentWeapons.add(chooseWeapon());
             System.out.println("Would you like to choose another weapon?");
-            String response = input.next().toLowerCase();
+            String response = input.nextLine().toLowerCase();
             if (!(response.equals("y") || response.equals("yes"))) {
                 break;
             }
