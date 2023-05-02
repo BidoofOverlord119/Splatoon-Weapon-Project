@@ -4,8 +4,11 @@ public class Roller implements Weapon {
     private final String weaponName;
     private final int baseDamage;
     private final int shotInterval;
+    /* Time that it takes to wind up the Roller's swing */
+    private final int swingTime;
+
     
-    public Roller(String weaponName, int baseDamage, int shotInterval) {
+    public Roller(String weaponName, int baseDamage, int shotInterval, int swingTime) {
         // 13 different parameters results in a multitude of different possible errors
         if (!(baseDamage >= 0)) {
             throw new IllegalArgumentException("Base damage must be at least 0");
@@ -13,10 +16,14 @@ public class Roller implements Weapon {
         if (!(shotInterval >= 1)) {
             throw new IllegalArgumentException("Shot interval must be at least 1");
         }
+        if (!(swingTime >= 1)) {
+            throw new IllegalArgumentException("Swing Time must be at least 1");
+        }
 
         this.weaponName = weaponName;
         this.baseDamage = baseDamage;
         this.shotInterval = shotInterval;
+        this.swingTime = swingTime;
     }
 
     @Override
@@ -43,8 +50,8 @@ public class Roller implements Weapon {
 
     @Override
     public double getBaseFireRate() {
-        /* X frames of swing - grab and check if constant
-         * 21 frame wind-up before swing
+        /* 6 frames of swing
+         * Varying number of (21 for splatroller) frames in wind-up before swing
          */
         return 60 / (double) shotInterval;
     }
