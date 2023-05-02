@@ -1,59 +1,25 @@
 package SplatoonWeapons;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Main {
-    private static final Scanner input = new Scanner(System.in);
-
-    private static Weapon chooseWeapon() {
-        System.out.println("Please choose a weapon type:");
-        for (int i = 0; i < Weapons.TYPES.length; i++) {
-            System.out.printf("%d: %s%n", i + 1, Weapons.TYPES[i].getClass().getComponentType().getSimpleName());
-        }
-        Weapon[] weaponType;
-        while (true) {
-            try {
-                weaponType = Weapons.TYPES[Integer.parseInt(input.nextLine()) - 1];
-                break;
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Please choose a valid option.");
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input, please try again.");
-            }
-        }
-
-        System.out.println("Please choose a weapon:");
-        for (int i = 0; i < weaponType.length; i++) {
-            System.out.printf("%d: %s%n", i + 1, weaponType[i].getWeaponName());
-        }
-        while (true) {
-            try {
-                return weaponType[Integer.parseInt(input.nextLine()) - 1];
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println("Please choose a valid option.");
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input, please try again.");
-            }
-        }
-    }
-
     public static void main(String[] args) {
         ArrayList<Weapon> currentWeapons = new ArrayList<>();
         while (true) {
             currentWeapons.add(chooseWeapon());
             System.out.println("Would you like to choose another weapon?");
-            String response = input.nextLine().toLowerCase();
+            String response = Utils.nextLine().toLowerCase();
             if (!(response.equals("y") || response.equals("yes"))) {
                 break;
             }
         }
+
         System.out.print("What is the distance of the target? ");
-        double targetDistance = input.nextDouble();
+        double targetDistance = Utils.getDouble(0);
         System.out.print("What is the X offset of the target (0 for none)? ");
-        double targetXOffset = input.nextDouble();
+        double targetXOffset = Utils.getDouble();
         System.out.print("How many frames should the weapon fire for (60 FPS)? ");
-        int time = input.nextInt();
+        int time = Utils.getInt(0);
         System.out.println();
         for (Weapon currentWeapon : currentWeapons) {
             System.out.println(currentWeapon);
@@ -63,4 +29,20 @@ public class Main {
             System.out.println();
         }
     }
+
+    private static Weapon chooseWeapon() {
+        System.out.println("Please choose a weapon type:");
+        for (int i = 0; i < Weapons.TYPES.length; i++) {
+            System.out.printf("%d: %s%n", i + 1, Weapons.TYPES[i].getClass().getComponentType().getSimpleName());
+        }
+        Weapon[] weaponType = Weapons.TYPES[Utils.getInt(1, Weapons.TYPES.length) - 1];
+
+        System.out.println("Please choose a weapon:");
+        for (int i = 0; i < weaponType.length; i++) {
+            System.out.printf("%d: %s%n", i + 1, weaponType[i].getWeaponName());
+        }
+
+        return weaponType[Utils.getInt(1, weaponType.length) - 1];
+    }
+
 }
