@@ -6,6 +6,8 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<Weapon> currentWeapons = new ArrayList<>();
 
+        System.out.println("Splatoon Weapon Damage Simulator");
+
         while (true) {
             System.out.println("""
                     What would you like to do?
