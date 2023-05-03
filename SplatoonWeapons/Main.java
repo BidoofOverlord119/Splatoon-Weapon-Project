@@ -4,15 +4,7 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Weapon> currentWeapons = new ArrayList<>();
-        while (true) {
-            currentWeapons.add(chooseWeapon());
-            System.out.println("Would you like to choose another weapon?");
-            String response = Utils.nextLine().toLowerCase();
-            if (!(response.equals("y") || response.equals("yes"))) {
-                break;
-            }
-        }
+        ArrayList<Weapon> currentWeapons = addWeapons();
 
         System.out.print("What is the distance of the target? ");
         double targetDistance = Utils.getDouble(0);
@@ -27,6 +19,74 @@ public class Main {
                     "with X offset %.2f%n", currentWeapon.calculateDamageOverTime(targetDistance, targetXOffset, time)
                     / 10.0, time, time / 60.0, targetDistance, targetXOffset);
             System.out.println();
+        }
+    }
+
+    private static ArrayList<Weapon> addWeapons() {
+        ArrayList<Weapon> currentWeapons = new ArrayList<>();
+        boolean finishedAdding = false;
+
+        while (!finishedAdding) {
+            System.out.print("Would you like to choose an (e)xisting or create a (n)ew one? ");
+            boolean createNew = false;
+            boolean hasResponded = false;
+            while (!hasResponded) {
+                String response = Utils.nextLine().toLowerCase();
+                if (response.equals("n") || response.equals("new")) {
+                    createNew = true;
+                    hasResponded = true;
+                } else if (response.equals("e") || response.equals("existing")) {
+                    hasResponded = true;
+                } else {
+                    System.out.println("Invalid response, please try again.");
+                }
+            }
+
+            if (createNew) {
+                try {
+                    currentWeapons.add(selectCreateWeapon());
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Looks like one of the options you gave wasn't quite right. The error is: " +
+                            e.getMessage());
+                }
+            } else {
+                currentWeapons.add(chooseWeapon());
+            }
+
+            System.out.print("Would you like to choose another weapon? ");
+            String response = Utils.nextLine().toLowerCase();
+            if (!(response.equals("y") || response.equals("yes"))) {
+                finishedAdding = true;
+            }
+        }
+
+        return currentWeapons;
+    }
+
+    private static Weapon selectCreateWeapon() {
+        System.out.println("""
+                Please choose a weapon type:
+                1. Shooter
+                2. Charger
+                3. Splatling
+                4. Blaster""");
+
+        switch (Utils.getInt(1, 4)) {
+            case 1 -> {
+                return Shooter.createWeapon();
+            }
+            case 2 -> {
+                return null;
+            }
+            case 3 -> {
+                return null;
+            }
+            case 4 -> {
+                return null;
+            }
+            default -> {
+                return null;
+            }
         }
     }
 
