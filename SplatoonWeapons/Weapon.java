@@ -14,7 +14,7 @@ public interface Weapon {
 
     int calculateDamageOverTime(double targetDistance, double targetXOffset, int time);
 
-    //String getFullStats();
+    String getFullStats();
 
     // All weapon classes should also implement a static method called createWeapon which returns a Weapon,
     // and asks the user interactively for stats of that weapon

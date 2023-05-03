@@ -25,6 +25,30 @@ public class Charger implements Weapon {
      */
     public Charger(String weaponName, int baseDamage, int minDamage, int maxDamage,
                    double fullRange, double minRange, double maxRange, int framesToCharge) {
+        if (!(baseDamage >= 0)) {
+            throw new IllegalArgumentException("Base damage must be at least 0");
+        }
+        if (!(minDamage >= 0)) {
+            throw new IllegalArgumentException("Minimum damage must be at least 0");
+        }
+        if (!(maxDamage >= minDamage)) {
+            throw new IllegalArgumentException("Maximum damage must be at least equal to minimum damage");
+        }
+
+        if (!(fullRange > 0)) {
+            throw new IllegalArgumentException("Full charge range must be greater than 0");
+        }
+        if (!(minRange > 0)) {
+            throw new IllegalArgumentException("Minimum range must be greater than 0");
+        }
+        if (!(maxRange >= minRange)) {
+            throw new IllegalArgumentException("Maximum range must be at least equal to minimum range");
+        }
+
+        if (!(framesToCharge > 0)) {
+            throw new IllegalArgumentException("Charging time must be greater than 0");
+        }
+
         this.weaponName = weaponName;
         this.baseDamage = baseDamage;
         this.minDamage = minDamage;
@@ -33,6 +57,68 @@ public class Charger implements Weapon {
         this.minRange = minRange;
         this.maxRange = maxRange;
         this.framesToCharge = framesToCharge;
+    }
+
+    /**
+     * An interactive method that asks the user for parameters for a new object, then creates and returns it.
+     *
+     * @return A new Shooter object with the desired attributes.
+     */
+    public static Charger createWeapon() {
+        System.out.print("Would you like to use advanced mode? This will ask for many more options, but it gives you " +
+                "more control over how the weapon will work. ");
+        String response = Utils.nextLine().toLowerCase();
+        boolean advanced = (response.equals("y") || response.equals("yes"));
+        System.out.println(advanced ? "Using advanced mode." : "Using simple mode.");
+
+        String weaponName;
+        int baseDamage, minDamage, maxDamage, framesToCharge;
+        double fullRange, minRange, maxRange;
+
+        System.out.print("Name of the weapon? ");
+        weaponName = Utils.nextLine();
+
+        System.out.print("Full charge shot damage? ");
+        baseDamage = Utils.getInt(0);
+        System.out.print("Time to do a full charge (in frames)? ");
+        framesToCharge = Utils.getInt(1);
+
+        if (advanced) {
+            System.out.print("Minimum charge damage? ");
+            minDamage = Utils.getInt(0);
+            System.out.print("Maximum (not full!) charge damage? ");
+            maxDamage = Utils.getInt(minDamage);
+
+            System.out.print("Range of a full charge? ");
+            fullRange = Utils.getDouble(0);
+            System.out.print("Range of a minimum charge? ");
+            minRange = Utils.getDouble(0);
+            System.out.print("Range of a maximum (not full!) charge? ");
+            maxRange = Utils.getDouble(minRange);
+        } else {
+            minDamage = baseDamage / 4;
+            maxDamage = baseDamage / 2;
+
+            System.out.print("Range of a full charge (distance units)? ");
+            fullRange = Utils.getDouble(0);
+            maxRange = fullRange;
+            minRange = fullRange / 2.666;
+        }
+
+        return new Charger(weaponName, baseDamage, minDamage, maxDamage, fullRange, minRange, maxRange, framesToCharge);
+    }
+
+    /**
+     * Generates a String that explains all the stats of the current Weapon object.
+     *
+     * @return A String with weapon info.
+     */
+    public String getFullStats() {
+        return String.format("%s charger%n" +
+                "%.1f base damage, %.1f minimum charge damage, %.1f max charge damage%n" +
+                "%.2f full range, %.2f minimum range, %.2f maximum range%n" +
+                "%d frames to do a full charge", weaponName, baseDamage / 10.0, minDamage / 10.0, maxDamage / 10.0,
+                fullRange, minRange, maxRange, framesToCharge);
     }
 
     /**

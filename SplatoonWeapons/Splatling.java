@@ -151,6 +151,120 @@ public class Splatling extends BaseShooter implements Weapon {
     }
 
     /**
+     * An interactive method that asks the user for parameters for a new object, then creates and returns it.
+     *
+     * @return A new Shooter object with the desired attributes.
+     */
+    public static Splatling createWeapon() {
+        System.out.print("Would you like to use advanced mode? This will ask for many more options, but it gives you " +
+                "more control over how the weapon will work. ");
+        String response = Utils.nextLine().toLowerCase();
+        boolean advanced = (response.equals("y") || response.equals("yes"));
+        System.out.println(advanced ? "Using advanced mode." : "Using simple mode.");
+
+        String weaponName;
+        int baseDamage, fullChargeDamage, shotInterval, falloffStartingFrame, falloffEndingFrame, minimumDamage,
+                initialVelocityTime, ring1ChargeTime, ring2ChargeTime, ring1FireTime, ring2FireTime;
+        double deviationMinOuterChance, deviationMaxOuterChance, deviationChangePerShot, deviationAngle,
+                initialVelocityMin, initialVelocityMax, slowVelocity;
+
+        System.out.print("Name of the weapon? ");
+        weaponName = Utils.nextLine();
+
+        System.out.print("Base damage of the weapon? ");
+        baseDamage = Utils.getInt(0);
+        System.out.print("Time between shots (in frames)? ");
+        shotInterval = Utils.getInt(1);
+
+        if (advanced) {
+            System.out.print("Damage done on a full charge? ");
+            fullChargeDamage = Utils.getInt(baseDamage);
+            System.out.print("Damage falloff starting frame? ");
+            falloffStartingFrame = Utils.getInt(0);
+            System.out.print("Damage falloff ending frame? ");
+            falloffEndingFrame = Utils.getInt(falloffStartingFrame);
+            System.out.print("Minimum damage after falloff? ");
+            minimumDamage = Utils.getInt(0, baseDamage);
+
+            System.out.print("Minimum chance for shot to deviate? ");
+            deviationMinOuterChance = Utils.getDouble(0, 1);
+            System.out.print("Maximum chance for shot to deviate? ");
+            deviationMaxOuterChance = Utils.getDouble(deviationMinOuterChance, 1);
+            System.out.print("Increase in deviation chance per shot? ");
+            deviationChangePerShot = Utils.getDouble(0, 1);
+            System.out.print("Maximum angle for shot deviation? ");
+            deviationAngle = Utils.getDouble(0);
+
+            System.out.print("Minimum initial shot velocity (units/frame)? ");
+            initialVelocityMin = Utils.getDouble(0);
+            System.out.print("Maximum initial shot velocity? ");
+            initialVelocityMax = Utils.getDouble(initialVelocityMin);
+            System.out.print("Frames spent at initial velocity? ");
+            initialVelocityTime = Utils.getInt(0);
+            System.out.print("Secondary (slow) velocity? ");
+            slowVelocity = Utils.getDouble(0);
+
+            System.out.print("Charge time for the first ring? ");
+            ring1ChargeTime = Utils.getInt(0);
+            System.out.print("Charge time for the second ring? ");
+            ring2ChargeTime = Utils.getInt(ring1ChargeTime);
+            System.out.print("Firing time for the first ring? ");
+            ring1FireTime = Utils.getInt(0);
+            System.out.print("Firing time for the second ring? ");
+            ring2FireTime = Utils.getInt(ring1FireTime);
+        } else {
+            fullChargeDamage = baseDamage;
+            falloffStartingFrame = 8;
+            falloffEndingFrame = 24;
+            minimumDamage = baseDamage / 2;
+
+            deviationMinOuterChance = 0.01;
+            deviationMaxOuterChance = 0.25;
+            deviationChangePerShot = 0.01;
+            deviationAngle = 6;
+
+            System.out.print("Maximum range (distance units)? ");
+            double desiredRange = Utils.getDouble(0);
+
+            initialVelocityMax = (desiredRange * 0.75) / 8.0;
+            initialVelocityMin = initialVelocityMax / 2.0;
+            initialVelocityTime = 8;
+            slowVelocity = desiredRange * 0.25;
+
+            ring1ChargeTime = 50;
+            ring2ChargeTime = 75;
+            ring1FireTime = 72;
+            ring2FireTime = 144;
+        }
+
+        return new Splatling(weaponName, baseDamage, fullChargeDamage, shotInterval, falloffStartingFrame,
+                falloffEndingFrame, minimumDamage, deviationMinOuterChance, deviationMaxOuterChance,
+                deviationChangePerShot, deviationAngle, initialVelocityMin, initialVelocityMax, initialVelocityTime,
+                slowVelocity, ring1ChargeTime, ring2ChargeTime, ring1FireTime, ring2FireTime);
+    }
+
+    /**
+     * Generates a String that explains all the stats of the current Weapon object.
+     *
+     * @return A String with weapon info.
+     */
+    public String getFullStats() {
+        return String.format("%s splatling%n" +
+                        "%.1f base damage, %.1f full charge damage, %.1f minimum damage, shoots every %d frames%n" +
+                        "Falloff starts on frame %d and ends on frame %d%n" +
+                        "%.1f%% minimum shot deviation chance, %.1f%% maximum chance%n" +
+                        "%.1f%% increase in chance per shot, %.1f degree shot deviation angle%n" +
+                        "%.2f min initial velocity, %.2f max, for %d frames, %.2f slow velocity afterwards%n" +
+                        "%d frames to charge ring 1, %d for ring 2%n" +
+                        "%d frames to fire ring 1, %d for ring 2",
+                weaponName, baseDamage / 10.0, fullChargeDamage / 10.0, minimumDamage / 10.0, shotInterval,
+                falloffStartingFrame, falloffEndingFrame, deviationMinOuterChance * 100, deviationMaxOuterChance * 100,
+                deviationChangePerShot * 100, deviationAngle, initialVelocityMin, initialVelocityMax,
+                initialVelocityTime, slowVelocity, ring1ChargeTime, ring2ChargeTime, ring1FireTime, ring2FireTime
+        );
+    }
+
+    /**
      * Calculates the initial velocity that a shot should have, based on the charge time.
      * Initial shot velocity scales from initialVelocityMin for no charge to initialVelocityMax
      * when at least 1 ring is full.

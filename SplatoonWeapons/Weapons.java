@@ -110,7 +110,7 @@ public class Weapons {
     );
 
     public static final Charger BAMBOOZLER = new Charger(
-            "Bamboozler 14", 850, 850, 300,
+            "Bamboozler 14", 850, 300, 850,
             19.564, 19.564, 19.564, 20
     );
 

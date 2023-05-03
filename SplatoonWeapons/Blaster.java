@@ -67,6 +67,72 @@ public class Blaster implements Weapon {
     }
 
     /**
+     * An interactive method that asks the user for parameters for a new object, then creates and returns it.
+     *
+     * @return A new Shooter object with the desired attributes.
+     */
+    public static Blaster createWeapon() {
+        System.out.print("Would you like to use advanced mode? This will ask for many more options, but it gives you " +
+                "more control over how the weapon will work. ");
+        String response = Utils.nextLine().toLowerCase();
+        boolean advanced = (response.equals("y") || response.equals("yes"));
+        System.out.println(advanced ? "Using advanced mode." : "Using simple mode.");
+
+        String weaponName;
+        int baseDamage, shotInterval, firstShotDelay, blastDamageNear, blastDamageFar;
+        double mainRange, blastNearRadius, blastFarRadius;
+
+        System.out.print("Name of the weapon? ");
+        weaponName = Utils.nextLine();
+
+        System.out.print("Base damage of the weapon? ");
+        baseDamage = Utils.getInt(0);
+        System.out.print("Time between shots (in frames)? ");
+        shotInterval = Utils.getInt(1);
+
+        System.out.print("Main range of the weapon (distance units)? ");
+        mainRange = Utils.getDouble(0);
+
+        if (advanced) {
+            System.out.print("Delay before firing the first shot? ");
+            firstShotDelay = Utils.getInt(0);
+
+            System.out.print("Near indirect hit damage? ");
+            blastDamageNear = Utils.getInt(0);
+            System.out.print("Far indirect hit damage? ");
+            blastDamageFar = Utils.getInt(blastDamageNear);
+
+            System.out.print("Maximum radius for near blast damage? ");
+            blastNearRadius = Utils.getDouble(0);
+            System.out.print("Maximum radius for far blast damage? ");
+            blastFarRadius = Utils.getDouble(blastNearRadius);
+        } else {
+            firstShotDelay = 10;
+            blastDamageNear = (int) (baseDamage * 0.56);
+            blastDamageFar = (int) (baseDamage * 0.4);
+            blastNearRadius = 0.94;
+            blastFarRadius = 3.3;
+        }
+
+        return new Blaster(weaponName, baseDamage, mainRange, shotInterval, firstShotDelay, blastDamageNear,
+                blastDamageFar, blastNearRadius, blastFarRadius);
+    }
+
+    /**
+     * Generates a String that explains all the stats of the current Weapon object.
+     *
+     * @return A String with weapon info.
+     */
+    public String getFullStats() {
+        return String.format("%s blaster%n" +
+                "%.1f base damage, %.1f near blast damage, %.1f far blast damage%n" +
+                "Shoots every %d frames, %d frames delay before first shot%n" +
+                "%.2f standard range, %.2f near blast radius, %.2f far blast radius",
+                weaponName, baseDamage / 10.0, blastDamageNear / 10.0, blastDamageFar / 10.0,
+                shotInterval, firstShotDelay, mainRange, blastNearRadius, blastFarRadius);
+    }
+
+    /**
      * Calculates the blast damage done by a non-direct hit.
      *
      * @param distanceToTarget Distance between the center of the explosion and the target, in distance units.

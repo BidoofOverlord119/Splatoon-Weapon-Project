@@ -25,7 +25,7 @@ public class Roller implements Weapon {
         this.swingTime = swingTime;
     }
 
-    public int calculateFalloff(int distance, int baseDamage, int falloffStartingDistance, int falloffEndingDistance,
+    public int calculateFalloff(double distance, int baseDamage, int falloffStartingDistance, int falloffEndingDistance,
                                 int minimumDamage) {
         /* This works a bit differently from primarily projectile based weapons and has fall off based on distance
         * This is going to take a bit to implement
@@ -53,9 +53,7 @@ public class Roller implements Weapon {
             return minimumDamage;
         }
 
-        // calculate damage lost per frame
-        double lostPerFrame = (baseDamage - minimumDamage) / (double) (falloffEndingDistance - falloffStartingDistance);
-        return (int) (baseDamage - ((distance - falloffStartingDistance) * lostPerFrame));
+        return 0;
     }
 
     @Override
@@ -87,6 +85,11 @@ public class Roller implements Weapon {
          */
         int interval = swingTime+6;
         return 60 / (double) interval;
+    }
+
+    @Override
+    public String getFullStats() {
+        return "";
     }
 
     @Override
