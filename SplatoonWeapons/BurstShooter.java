@@ -32,6 +32,97 @@ public class BurstShooter extends Shooter implements Weapon {
     }
 
     /**
+     * An interactive method that asks the user for parameters for a new object, then creates and returns it.
+     *
+     * @return A new BurstShooter object with the desired attributes.
+     */
+    public static BurstShooter createWeapon() {
+        System.out.print("Would you like to use advanced mode? This will ask for many more options, but it gives you " +
+                "more control over how the weapon will work. ");
+        String response = Utils.nextLine().toLowerCase();
+        boolean advanced = (response.equals("y") || response.equals("yes"));
+        System.out.println(advanced ? "Using advanced mode." : "Using simple mode.");
+
+        String weaponName;
+        int baseDamage, shotInterval, falloffStartingFrame, falloffEndingFrame, minimumDamage, initialVelocityTime,
+                burstSize, burstCooldown;
+        double deviationMinOuterChance, deviationMaxOuterChance, deviationChangePerShot, deviationAngle,
+                initialVelocity, slowVelocity;
+
+        System.out.print("Name of the weapon? ");
+        weaponName = Utils.nextLine();
+
+        System.out.print("Base damage of the weapon? ");
+        baseDamage = Utils.getInt(0);
+        System.out.print("Time between shots (in frames)? ");
+        shotInterval = Utils.getInt(1);
+
+        System.out.print("Amount of shots in each burst? ");
+        burstSize = Utils.getInt(1);
+        System.out.print("Amount of time in between each burst? ");
+        burstCooldown = Utils.getInt(1);
+
+        if (advanced) {
+            System.out.print("Damage falloff starting frame? ");
+            falloffStartingFrame = Utils.getInt(0);
+            System.out.print("Damage falloff ending frame? ");
+            falloffEndingFrame = Utils.getInt(falloffStartingFrame);
+            System.out.print("Minimum damage after falloff? ");
+            minimumDamage = Utils.getInt(0, baseDamage);
+
+            System.out.print("Minimum chance for shot to deviate? ");
+            deviationMinOuterChance = Utils.getDouble(0, 1);
+            System.out.print("Maximum chance for shot to deviate? ");
+            deviationMaxOuterChance = Utils.getDouble(deviationMinOuterChance, 1);
+            System.out.print("Increase in deviation chance per shot? ");
+            deviationChangePerShot = Utils.getDouble(0, 1);
+            System.out.print("Maximum angle for shot deviation? ");
+            deviationAngle = Utils.getDouble(0);
+
+            System.out.print("Initial shot velocity (units/frame)? ");
+            initialVelocity = Utils.getDouble(0);
+            System.out.print("Frames spent at initial velocity? ");
+            initialVelocityTime = Utils.getInt(0);
+            System.out.print("Secondary (slow) velocity? ");
+            slowVelocity = Utils.getDouble(0, initialVelocity);
+        } else {
+            falloffStartingFrame = 8;
+            falloffEndingFrame = 24;
+            minimumDamage = baseDamage / 2;
+
+            deviationMinOuterChance = 0.01;
+            deviationMaxOuterChance = 0.25;
+            deviationChangePerShot = 0.01;
+            deviationAngle = 6;
+
+            System.out.print("Maximum range (distance units)? ");
+            double desiredRange = Utils.getDouble(0);
+
+            initialVelocity = (desiredRange * 0.75) / 4.0;
+            initialVelocityTime = 4;
+            slowVelocity = desiredRange * 0.25;
+        }
+
+        return new BurstShooter(weaponName, baseDamage, shotInterval, falloffStartingFrame, falloffEndingFrame,
+                minimumDamage, deviationMinOuterChance, deviationMaxOuterChance, deviationChangePerShot, deviationAngle,
+                initialVelocity, initialVelocityTime, slowVelocity, burstSize, burstCooldown);
+    }
+
+    /**
+     * Generates a String that explains all the stats of the current Weapon object.
+     *
+     * @return A String with weapon info.
+     */
+    @Override
+    public String getFullStats() {
+        return String.format("""
+                %s
+                %d shots per burst, %d frames in between bursts""",
+                super.getFullStats(), burstSize, burstCooldown);
+    }
+
+
+    /**
      * Calculates damage dealt by the weapon to a target over a certain amount of time.
      *
      * @param targetDistance Distance from the player to the target, in distance units.

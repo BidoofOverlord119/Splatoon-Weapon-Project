@@ -59,22 +59,25 @@ public class Main {
         System.out.println("""
                 Please choose a weapon type:
                 1. Shooter
-                2. Charger
-                3. Splatling
-                4. Blaster""");
-        // add roller when it's done
+                2. Burst Shooter
+                3. Charger
+                4. Splatling
+                5. Blaster""");
 
-        switch (Utils.getInt(1, 4)) {
+        switch (Utils.getInt(1, 5)) {
             case 1 -> {
                 return Shooter.createWeapon();
             }
             case 2 -> {
-                return Charger.createWeapon();
+                return BurstShooter.createWeapon();
             }
             case 3 -> {
-                return Splatling.createWeapon();
+                return Charger.createWeapon();
             }
             case 4 -> {
+                return Splatling.createWeapon();
+            }
+            case 5 -> {
                 return Blaster.createWeapon();
             }
             default -> {
