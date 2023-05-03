@@ -4,19 +4,58 @@ public class Roller implements Weapon {
     private final String weaponName;
     private final int baseDamage;
     private final int shotInterval;
+    /* Time that it takes to wind up the Roller's swing */
+    private final int swingTime;
+
     
-    public Roller(String weaponName, int baseDamage, int shotInterval) {
-        // 13 different parameters results in a multitude of different possible errors
+    public Roller(String weaponName, int baseDamage, int shotInterval, int swingTime) {
         if (!(baseDamage >= 0)) {
             throw new IllegalArgumentException("Base damage must be at least 0");
         }
         if (!(shotInterval >= 1)) {
             throw new IllegalArgumentException("Shot interval must be at least 1");
         }
+        if (!(swingTime >= 1)) {
+            throw new IllegalArgumentException("Swing Time must be at least 1");
+        }
 
         this.weaponName = weaponName;
         this.baseDamage = baseDamage;
         this.shotInterval = shotInterval;
+        this.swingTime = swingTime;
+    }
+
+    public int calculateFalloff(int distance, int baseDamage, int falloffStartingDistance, int falloffEndingDistance,
+                                int minimumDamage) {
+        /* This works a bit differently from primarily projectile based weapons and has fall off based on distance
+        * This is going to take a bit to implement
+        * */
+        if (!(distance >= 0)) {
+            throw new IllegalArgumentException("Distance must be at least 0");
+        }
+        if (!(baseDamage >= 0)) {
+            throw new IllegalArgumentException("Base damage must be at least 0");
+        }
+
+        if (!(falloffStartingDistance >= 0)) {
+            throw new IllegalArgumentException("Falloff starting frame must be at least 0");
+        }
+        if (!(falloffEndingDistance >= falloffStartingDistance)) {
+            throw new IllegalArgumentException("Falloff ending frame must be at least equal to ending frame");
+        }
+        if (!(minimumDamage >= 0)) {
+            throw new IllegalArgumentException("Falloff minimum damage must be at least 0");
+        }
+
+        if (distance <= falloffStartingDistance) {
+            return baseDamage;
+        } else if (distance > falloffEndingDistance) {
+            return minimumDamage;
+        }
+
+        // calculate damage lost per frame
+        double lostPerFrame = (baseDamage - minimumDamage) / (double) (falloffEndingDistance - falloffStartingDistance);
+        return (int) (baseDamage - ((distance - falloffStartingDistance) * lostPerFrame));
     }
 
     @Override
@@ -43,10 +82,11 @@ public class Roller implements Weapon {
 
     @Override
     public double getBaseFireRate() {
-        /* X frames of swing - grab and check if constant
-         * 21 frame wind-up before swing
+        /* 6 frames of swing
+         * Varying number of (21 for splatroller) frames in wind-up before swing
          */
-        return 60 / (double) shotInterval;
+        int interval = swingTime+6;
+        return 60 / (double) interval;
     }
 
     @Override
