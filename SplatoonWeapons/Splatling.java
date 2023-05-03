@@ -153,7 +153,7 @@ public class Splatling extends BaseShooter implements Weapon {
     /**
      * An interactive method that asks the user for parameters for a new object, then creates and returns it.
      *
-     * @return A new Shooter object with the desired attributes.
+     * @return A new Splatling object with the desired attributes.
      */
     public static Splatling createWeapon() {
         System.out.print("Would you like to use advanced mode? This will ask for many more options, but it gives you " +
@@ -249,14 +249,15 @@ public class Splatling extends BaseShooter implements Weapon {
      * @return A String with weapon info.
      */
     public String getFullStats() {
-        return String.format("%s splatling%n" +
-                        "%.1f base damage, %.1f full charge damage, %.1f minimum damage, shoots every %d frames%n" +
-                        "Falloff starts on frame %d and ends on frame %d%n" +
-                        "%.1f%% minimum shot deviation chance, %.1f%% maximum chance%n" +
-                        "%.1f%% increase in chance per shot, %.1f degree shot deviation angle%n" +
-                        "%.2f min initial velocity, %.2f max, for %d frames, %.2f slow velocity afterwards%n" +
-                        "%d frames to charge ring 1, %d for ring 2%n" +
-                        "%d frames to fire ring 1, %d for ring 2",
+        return String.format("""
+                        %s splatling
+                        %.1f base damage, %.1f full charge damage, %.1f minimum damage, shoots every %d frames
+                        Falloff starts on frame %d and ends on frame %d
+                        %.1f%% minimum shot deviation chance, %.1f%% maximum chance
+                        %.1f%% increase in chance per shot, %.1f degree shot deviation angle
+                        %.2f min initial velocity, %.2f max, for %d frames, %.2f slow velocity afterwards
+                        %d frames to charge ring 1, %d for ring 2
+                        %d frames to fire ring 1, %d for ring 2""",
                 weaponName, baseDamage / 10.0, fullChargeDamage / 10.0, minimumDamage / 10.0, shotInterval,
                 falloffStartingFrame, falloffEndingFrame, deviationMinOuterChance * 100, deviationMaxOuterChance * 100,
                 deviationChangePerShot * 100, deviationAngle, initialVelocityMin, initialVelocityMax,

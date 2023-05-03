@@ -62,7 +62,7 @@ public class Charger implements Weapon {
     /**
      * An interactive method that asks the user for parameters for a new object, then creates and returns it.
      *
-     * @return A new Shooter object with the desired attributes.
+     * @return A new Charger object with the desired attributes.
      */
     public static Charger createWeapon() {
         System.out.print("Would you like to use advanced mode? This will ask for many more options, but it gives you " +
@@ -114,10 +114,11 @@ public class Charger implements Weapon {
      * @return A String with weapon info.
      */
     public String getFullStats() {
-        return String.format("%s charger%n" +
-                "%.1f base damage, %.1f minimum charge damage, %.1f max charge damage%n" +
-                "%.2f full range, %.2f minimum range, %.2f maximum range%n" +
-                "%d frames to do a full charge", weaponName, baseDamage / 10.0, minDamage / 10.0, maxDamage / 10.0,
+        return String.format("""
+                        %s charger
+                        %.1f base damage, %.1f minimum charge damage, %.1f max charge damage
+                        %.2f full range, %.2f minimum range, %.2f maximum range
+                        %d frames to do a full charge""", weaponName, baseDamage / 10.0, minDamage / 10.0, maxDamage / 10.0,
                 fullRange, minRange, maxRange, framesToCharge);
     }
 

@@ -69,7 +69,7 @@ public class Blaster implements Weapon {
     /**
      * An interactive method that asks the user for parameters for a new object, then creates and returns it.
      *
-     * @return A new Shooter object with the desired attributes.
+     * @return A new Blaster object with the desired attributes.
      */
     public static Blaster createWeapon() {
         System.out.print("Would you like to use advanced mode? This will ask for many more options, but it gives you " +
@@ -124,10 +124,11 @@ public class Blaster implements Weapon {
      * @return A String with weapon info.
      */
     public String getFullStats() {
-        return String.format("%s blaster%n" +
-                "%.1f base damage, %.1f near blast damage, %.1f far blast damage%n" +
-                "Shoots every %d frames, %d frames delay before first shot%n" +
-                "%.2f standard range, %.2f near blast radius, %.2f far blast radius",
+        return String.format("""
+                        %s blaster
+                        %.1f base damage, %.1f near blast damage, %.1f far blast damage
+                        Shoots every %d frames, %d frames delay before first shot
+                        %.2f standard range, %.2f near blast radius, %.2f far blast radius""",
                 weaponName, baseDamage / 10.0, blastDamageNear / 10.0, blastDamageFar / 10.0,
                 shotInterval, firstShotDelay, mainRange, blastNearRadius, blastFarRadius);
     }

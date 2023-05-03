@@ -182,12 +182,13 @@ public class Shooter extends BaseShooter implements Weapon {
      * @return A String with weapon info.
      */
     public String getFullStats() {
-        return String.format("%s shooter%n" +
-                "%.1f base damage, %.1f minimum damage, shoots every %d frames%n" +
-                "Falloff starts on frame %d and ends on frame %d%n" +
-                "%.1f%% minimum shot deviation chance, %.1f%% maximum chance%n" +
-                "%.1f%% increase in chance per shot, %.1f degree shot deviation angle%n" +
-                "Initial velocity of %.2f for %d frames, %.2f slow velocity afterwards",
+        return String.format("""
+                        %s shooter
+                        %.1f base damage, %.1f minimum damage, shoots every %d frames
+                        Falloff starts on frame %d and ends on frame %d
+                        %.1f%% minimum shot deviation chance, %.1f%% maximum chance
+                        %.1f%% increase in chance per shot, %.1f degree shot deviation angle
+                        Initial velocity of %.2f for %d frames, %.2f slow velocity afterwards""",
                 weaponName, baseDamage / 10.0, minimumDamage / 10.0, shotInterval, falloffStartingFrame,
                 falloffEndingFrame, deviationMinOuterChance * 100, deviationMaxOuterChance * 100,
                 deviationChangePerShot * 100, deviationAngle, initialVelocity, initialVelocityTime, slowVelocity
