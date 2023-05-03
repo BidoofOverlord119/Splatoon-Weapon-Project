@@ -2,58 +2,82 @@ package SplatoonWeapons;
 
 public class Roller implements Weapon {
     private final String weaponName;
-    private final int baseDamage;
-    private final int shotInterval;
-    /* Time that it takes to wind up the Roller's swing */
-    private final int swingTime;
 
-    
-    public Roller(String weaponName, int baseDamage, int shotInterval, int swingTime) {
-        if (!(baseDamage >= 0)) {
-            throw new IllegalArgumentException("Base damage must be at least 0");
-        }
-        if (!(shotInterval >= 1)) {
-            throw new IllegalArgumentException("Shot interval must be at least 1");
-        }
-        if (!(swingTime >= 1)) {
-            throw new IllegalArgumentException("Swing Time must be at least 1");
+    /* Time that it takes to wind up the Roller's swing */
+    private final int windUpTime;
+
+    private final double[] innerDistances;
+    private final int[] innerDamages;
+    private final double innerAngle;
+    private final double[] outerDistances;
+    private final int[] outerDamages;
+
+    private static final int SWING_TIME = 7; // swing time seems to be a constant of 7 frames
+
+
+    public Roller(String weaponName, int windUpTime, double[] innerDistances, int[] innerDamages, double innerAngle,
+                  double[] outerDistances, int[] outerDamages) {
+        if (!(windUpTime >= 1)) {
+            throw new IllegalArgumentException("Wind up time must be at least 1");
         }
 
         this.weaponName = weaponName;
-        this.baseDamage = baseDamage;
-        this.shotInterval = shotInterval;
-        this.swingTime = swingTime;
+        this.windUpTime = windUpTime;
+
+        this.innerDistances = innerDistances;
+        this.innerDamages = innerDamages;
+        this.innerAngle = innerAngle;
+        this.outerDistances = outerDistances;
+        this.outerDamages = outerDamages;
     }
 
-    public int calculateFalloff(double distance, int baseDamage, int falloffStartingDistance, int falloffEndingDistance,
-                                int minimumDamage) {
-        /* This works a bit differently from primarily projectile based weapons and has fall off based on distance
-        * This is going to take a bit to implement
-        * */
-        if (!(distance >= 0)) {
+    public int calculateDistanceFalloff(double distanceToTarget, double targetAngle) {
+        // this method is unexplainable, just believe me when I say that it works
+        if (!(distanceToTarget >= 0)) {
             throw new IllegalArgumentException("Distance must be at least 0");
         }
-        if (!(baseDamage >= 0)) {
-            throw new IllegalArgumentException("Base damage must be at least 0");
+
+        double[] distances;
+        int[] damages;
+
+        if (targetAngle <= innerAngle) {
+            distances = innerDistances;
+            damages = innerDamages;
+        } else {
+            distances = outerDistances;
+            damages = outerDamages;
         }
 
-        if (!(falloffStartingDistance >= 0)) {
-            throw new IllegalArgumentException("Falloff starting frame must be at least 0");
-        }
-        if (!(falloffEndingDistance >= falloffStartingDistance)) {
-            throw new IllegalArgumentException("Falloff ending frame must be at least equal to ending frame");
-        }
-        if (!(minimumDamage >= 0)) {
-            throw new IllegalArgumentException("Falloff minimum damage must be at least 0");
+        double upperDistance;
+        double lowerDistance;
+        int upperDamage;
+        int lowerDamage;
+
+        if (distanceToTarget <= distances[0]) {
+            return damages[0];
+        } else if (distanceToTarget <= distances[1]) {
+            upperDistance = distances[0];
+            lowerDistance = distances[1];
+            upperDamage = damages[0];
+            lowerDamage = damages[1];
+        } else if (distanceToTarget <= distances[2]) {
+            upperDistance = distances[1];
+            lowerDistance = distances[2];
+            upperDamage = damages[1];
+            lowerDamage = damages[2];
+        } else if (distanceToTarget <= distances[3]) {
+            upperDistance = distances[2];
+            lowerDistance = distances[3];
+            upperDamage = damages[2];
+            lowerDamage = damages[3];
+        } else {
+            return 0;
         }
 
-        if (distance <= falloffStartingDistance) {
-            return baseDamage;
-        } else if (distance > falloffEndingDistance) {
-            return minimumDamage;
-        }
+        double distanceDifference = lowerDistance - upperDistance;
+        int damageDifference = upperDamage - lowerDamage;
 
-        return 0;
+        return (int) (upperDamage - (damageDifference * ((distanceToTarget - upperDistance) / distanceDifference)));
     }
 
     @Override
@@ -63,13 +87,12 @@ public class Roller implements Weapon {
         }
         if (time == 0) return 0;
 
-        int damageDealt = 0;
-        return damageDealt;
+        return 0;
     }
 
     @Override
     public int getBaseDamage() {
-        return baseDamage;
+        return innerDamages[0];
     }
 
     @Override
@@ -83,8 +106,7 @@ public class Roller implements Weapon {
         /* 6 frames of swing
          * Varying number of (21 for splatroller) frames in wind-up before swing
          */
-        int interval = swingTime+6;
-        return 60 / (double) interval;
+        return 60 / (double) (windUpTime + SWING_TIME);
     }
 
     @Override
