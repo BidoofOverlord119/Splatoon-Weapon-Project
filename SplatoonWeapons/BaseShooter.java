@@ -154,14 +154,13 @@ public abstract class BaseShooter implements Weapon {
             throw new IllegalArgumentException("Previous shots must be at least 0");
         }
 
-        double targetSize = 0.7; // (horizontal) size of target in distance units
         if (targetDistance > calculateRange(initialVelocity, initialVelocityTime, slowVelocity)) {
             return 0;
         }
         // The shot's angle must be between these two to hit
         // Math.atan is in radians, needs to be converted to degrees
-        double targetAngleLeft = Math.toDegrees(Math.atan((targetXOffset - (0.5 * targetSize)) / targetDistance));
-        double targetAngleRight = Math.toDegrees(Math.atan((targetXOffset + (0.5 * targetSize)) / targetDistance));
+        double targetAngleLeft = Math.toDegrees(Math.atan((targetXOffset - (0.5 * TARGET_SIZE)) / targetDistance));
+        double targetAngleRight = Math.toDegrees(Math.atan((targetXOffset + (0.5 * TARGET_SIZE)) / targetDistance));
         double shotDeviationAngle = calculateShotDeviation(previousShots, deviationMinOuterChance,
                 deviationMaxOuterChance, deviationChangePerShot, deviationAngle);
         if (shotDeviationAngle <= targetAngleLeft || shotDeviationAngle >= targetAngleRight) {

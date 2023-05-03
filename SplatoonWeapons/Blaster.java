@@ -169,11 +169,10 @@ public class Blaster implements Weapon {
             throw new IllegalArgumentException("Target distance must be at least 0");
         }
 
-        double targetSize = 0.7;
         // blasters don't have shot deviation, so if the x offset is more than half the target's size
         // in either direction it will cause an indirect hit or a miss
         if (mainRange < targetDistance ||
-                (((targetSize / 2.0) - Math.abs(targetXOffset)) < 0)) { // shot misses the target
+                (((TARGET_SIZE / 2.0) - Math.abs(targetXOffset)) < 0)) { // shot misses the target
             // shot and target form a right triangle
             double distanceToTarget = Math.sqrt(Math.pow(mainRange - targetDistance, 2) + Math.pow(targetXOffset, 2));
             return calculateBlastDamage(distanceToTarget);

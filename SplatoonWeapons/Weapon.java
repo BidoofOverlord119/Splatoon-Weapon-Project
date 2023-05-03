@@ -1,6 +1,7 @@
 package SplatoonWeapons;
 
 public interface Weapon {
+    double TARGET_SIZE = 0.7;
 
     String getWeaponName();
 

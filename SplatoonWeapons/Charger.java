@@ -174,14 +174,13 @@ public class Charger implements Weapon {
             throw new IllegalArgumentException("Target distance must be at least 0");
         }
 
-        double targetSize = 0.7;
         double range = calculateRange(chargeState);
         if (range < targetDistance) {
             return 0;
         }
         // chargers don't have shot deviation, so if the x offset is more than half the target's size
         // in either direction it will miss
-        if (((targetSize / 2.0) - Math.abs(targetXOffset)) < 0) {
+        if (((TARGET_SIZE / 2.0) - Math.abs(targetXOffset)) < 0) {
             return 0;
         }
 
